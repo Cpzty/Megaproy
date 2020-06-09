@@ -79,20 +79,20 @@ WSGI_APPLICATION = 'proyecto_psicologia.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'DBNAME',
-    'USER': 'postgres',
-    'PASSWORD': 'DBPW',
-    'HOST': 'localhost',
-    'PORT': '',
- #}
 #DATABASES = {
-   # 'default': dj_database_url.config(
-  #      default=config('DATABASE_URL')
- #   )
-#}
+#'default': {
+   # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+   # 'NAME': 'DBNAME',
+   # 'USER': 'postgres',
+   #'PASSWORD': 'DBPW',
+   # 'HOST': 'localhost',
+   # 'PORT': '',
+ #}
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
