@@ -1,1 +1,1 @@
-web: gunicorn blog.wsgi --log-file -
+web: gunicorn proyecto_psicologia.wsgi --log-file -
