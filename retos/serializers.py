@@ -16,3 +16,9 @@ class UserSerializer(serializers.ModelSerializer):
             'email',
             'password',
         )
+        validators = [
+            UniqueTogetherValidator(
+                queryset=User.objects.all(),
+                fields=['username', 'email']
+            )
+        ]
