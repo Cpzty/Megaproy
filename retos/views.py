@@ -67,7 +67,7 @@ class UserRecordView(APIView):
         if serializer.is_valid(raise_exception=ValueError):
             print("request data: ", request.data)
             modder = request.data.dict()
-            modder['email'] = [modder.get('email')]
+            modder['email'] = modder.get('email')
             print('modder: ',modder)
             serializer.create(validated_data=modder)
             return Response(
