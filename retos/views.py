@@ -69,7 +69,7 @@ class UserRecordView(APIView):
             modder = request.data.dict()
             modder['email'] = [modder.get('email')]
             print('modder: ',modder)
-            serializer.create(validated_data=request.data)
+            serializer.create(validated_data=modder)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
