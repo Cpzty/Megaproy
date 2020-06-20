@@ -1,9 +1,10 @@
-from .serializers import UserSerializer
-from rest_framework.permissions import AllowAny
+from .serializers import UserSerializer, ProfileSerializer
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
+from .models import Profile
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 #from django.template.loader import render_to_string
@@ -50,15 +51,11 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     msg.send()
 
 class UserRecordView(APIView):
-    """
-    API View to create or get a list of all the registered
-    users. GET request returns the registered users whereas
-    a POST request allows to create a new user.
-    """
+
     permission_classes = [AllowAny]
 
-    def get(self, format=None):
-        users = User.objects.all()
+    def get(self, request):
+        users = User.objects.filter(username=request.user.username)
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
 
@@ -69,6 +66,7 @@ class UserRecordView(APIView):
             modder = request.data.dict()
             modder['email'] = modder.get('email')
             print('modder: ',modder)
+            
             serializer.create(validated_data=modder)
             return Response(
                 serializer.data,
@@ -81,3 +79,12 @@ class UserRecordView(APIView):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class ProfileRecordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        users = Profile.objects.filter(User=request.user)
+        serializer = ProfileSerializer(users, many=True)
+        return Response(serializer.data)
