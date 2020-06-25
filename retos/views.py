@@ -11,8 +11,8 @@ from django.dispatch import receiver
 from django.urls import reverse
 
 from django_rest_passwordreset.signals import reset_password_token_created
-
-
+from django.views.generic.edit import UpdateView
+from django.shortcuts import get_object_or_404
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
     """
@@ -85,6 +85,25 @@ class ProfileRecordView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        users = Profile.objects.filter(User=request.user)
+        users = Profile.objects.filter(user=request.user)
         serializer = ProfileSerializer(users, many=True)
         return Response(serializer.data)
+
+    def put(self, request):
+        users = Profile.objects.filter(user=request.user)
+        for objec in users:
+            if 'racha' in request.POST:
+                objec.racha += 1
+            objec.save()
+        serializer = ProfileSerializer(users, many=True)
+        return Response(serializer.data)
+
+
+class ProfileUpView(UpdateView):
+    model = Profile
+    template_name_suffix = '_form'
+    queryset = Profile.objects.all()
+
+    def get_object(self):
+        user_ = self.kwargs.get('User')
+        return get_object_or_404(Profile, id=user_)
