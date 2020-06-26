@@ -16,7 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'username',
             'email',
-            'password',
 
 
         )
@@ -40,8 +39,13 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = (
-            'user',
             'racha',
+            'alegre',
+            'caraX',
+            'triste',
+            'enojado',
+            'emocion_inicial',
+            'emocion_final',
         )
 
 

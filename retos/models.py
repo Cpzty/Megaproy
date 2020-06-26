@@ -11,6 +11,9 @@ class Profile(models.Model):
     caraX = models.IntegerField(default=0)
     triste = models.IntegerField(default=0)
     enojado = models.IntegerField(default=0)
+    #emocion inicial capturada
+    emocion_inicial = models.CharField(max_length=50, default='')
+    emocion_final = models.CharField(max_length=50, default='')
 
     def __str__(self):
         return str(self.user)

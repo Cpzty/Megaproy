@@ -94,6 +94,19 @@ class ProfileRecordView(APIView):
         for objec in users:
             if 'racha' in request.POST:
                 objec.racha += 1
+            if 'alegre' in request.POST:
+                objec.alegre += 1
+            if 'caraX' in request.POST:
+                objec.caraX += 1
+            if 'triste' in request.POST:
+                objec.triste += 1
+            if 'enojado' in request.POST:
+                objec.enojado += 1
+            if 'emocion_inicial' in request.POST:
+                objec.emocion_inicial = request.POST.get('emocion_inicial', '')
+            if 'emocion_final' in request.POST:
+                objec.emocion_final = request.POST.get('emocion_final', '')
+
             objec.save()
         serializer = ProfileSerializer(users, many=True)
         return Response(serializer.data)
