@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'scout_apm.django',
     'retos',
     'rest_framework',
     'rest_framework.authtoken',
@@ -159,3 +160,6 @@ STATICFILES_DIRS = (
 )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Scout settings
+SCOUT_NAME = "Ripper"
