@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Cuestionario, Reto_finalizado
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
@@ -27,6 +27,17 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 
+class CuestionarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cuestionario
+        fields = (
+            'name',
+            'questions_count',
+            'description',
+
+        )
+
+
 class ProfileSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
@@ -49,3 +60,12 @@ class ProfileSerializer(serializers.ModelSerializer):
         )
 
 
+class RetoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reto_finalizado
+        fields = (
+            'user',
+            'reto',
+            'finalizado',
+
+        )

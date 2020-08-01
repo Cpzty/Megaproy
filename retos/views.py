@@ -1,10 +1,10 @@
-from .serializers import UserSerializer, ProfileSerializer
+from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Cuestionario, Reto_finalizado
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 #from django.template.loader import render_to_string
@@ -50,6 +50,8 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     #msg.attach_alternative(email_html_message, "text/html")
     msg.send()
 
+
+
 class UserRecordView(APIView):
 
     permission_classes = [AllowAny]
@@ -80,6 +82,19 @@ class UserRecordView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+class RetoRecordView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        retos = Reto_finalizado.objects.filter(user=request.user)
+        serializer = RetoSerializer(retos)
+        return Response(serializer.data)
+
+class CuestionarioRecordView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        cuestionarios = Cuestionario.objects.filter(id=id)
+        serializer = CuestionarioSerializer(cuestionarios)
+        return Response(serializer.data)
 
 class ProfileRecordView(APIView):
     permission_classes = [IsAuthenticated]

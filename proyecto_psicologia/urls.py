@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 #from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    path('django_query_profiler/', include('django_query_profiler.client.urls')),
     path('admin/', admin.site.urls),
     path('retos/', include('retos.urls', namespace='retos')),
     path('retos-token-auth/', views.obtain_auth_token, name='retos-token-auth'),

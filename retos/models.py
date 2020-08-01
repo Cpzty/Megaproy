@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from django.template.defaultfilters import slugify
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
@@ -26,6 +27,15 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+class Reto(models.Model):
+    description = models.CharField(max_length=1000)
+
+class Reto_finalizado(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reto = models.ForeignKey(Reto, on_delete=models.CASCADE)
+    finalizado = models.BooleanField(default=False)
+
 
 class Cuestionario(models.Model):
     name = models.CharField(max_length=1000)
@@ -71,13 +81,13 @@ class Respuesta_final(models.Model):
 
     @receiver(post_save, sender=Cuestionario)
     def set_default_quiz(sender, instance, created,**kwargs):
-    cuestionario = Cuestionario.objects.filter(id = instance.id)
-    cuestionario.update(questions_count=instance.pregunta_set.filter(cuestionario=instance.pk).count())
+        cuestionario = Cuestionario.objects.filter(id = instance.id)
+        cuestionario.update(questions_count=instance.pregunta_set.filter(cuestionario=instance.pk).count())
     @receiver(post_save, sender=Pregunta)
     def set_default(sender, instance, created,**kwargs):
-    cuestionario = Cuestionario.objects.filter(id = instance.cuestionario.id)
-    cuestionario.update(questions_count=instance.cuestionario.question_set.filter(cuestionario=instance.cuestionario.pk).count())
+        cuestionario = Cuestionario.objects.filter(id = instance.cuestionario.id)
+        cuestionario.update(questions_count=instance.cuestionario.question_set.filter(cuestionario=instance.cuestionario.pk).count())
     @receiver(pre_save, sender=Cuestionario)
     def slugify_title(sender, instance, *args, **kwargs):
-     instance.slug = slugify(instance.name)
+        instance.slug = slugify(instance.name)
 

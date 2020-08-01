@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import dj_database_url
 from decouple import config
+from django_query_profiler.settings import *
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_rest_passwordreset',
+    'django_query_profiler',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django_query_profiler.client.middleware.QueryProfilerMiddleware',
 ]
 
 ROOT_URLCONF = 'proyecto_psicologia.urls'
@@ -79,17 +83,17 @@ WSGI_APPLICATION = 'proyecto_psicologia.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
-    }
-}
 #DATABASES = {
-   # 'default': dj_database_url.config(
-  #      default=config('DATABASE_URL')
- #   )
+   # 'default': {
+   #     'ENGINE': 'django_query_profiler.django.db.backends.sqlite3',
+  #      'NAME': 'mydatabase',
+ #   }
 #}
+DATABASES = {
+    'default': django_query_profiler.dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
