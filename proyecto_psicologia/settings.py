@@ -90,9 +90,11 @@ WSGI_APPLICATION = 'proyecto_psicologia.wsgi.application'
  #   }
 #}
 DATABASES = {
-    'default': django_query_profiler.dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
+    'default':{
+      'ENGINE' : "django_query_profiler.dj_database_url.config(default=config('DATABASE_URL'))",
+      'NAME' : 'url',
+    }
+
 }
 
 REST_FRAMEWORK = {
