@@ -5,7 +5,6 @@ from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 
 class Profile(models.Model):
-    id =  models.AutoField(primary_key=True, default=None)
     user = models.OneToOneField(User,  on_delete= models.CASCADE)
     racha = models.IntegerField(default=0)
     #caritas
