@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1)
+    user = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1, related_name='profile')
     racha = models.IntegerField(default=0)
     #caritas
     alegre = models.IntegerField(default=0)
