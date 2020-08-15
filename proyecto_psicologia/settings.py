@@ -85,10 +85,10 @@ WSGI_APPLICATION = 'proyecto_psicologia.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 #DATABASES = {
- #   'default': {
-  #      'ENGINE': 'django_query_profiler.django.db.backends.sqlite3',
-   #     'NAME': 'mydatabase',
-   # }
+   # 'default': {
+   #     'ENGINE': 'django_query_profiler.django.db.backends.sqlite3',
+  #      'NAME': 'mydatabase',
+ #   }
 #}
 DATABASES = {
     'default': dj_database_url.config(
