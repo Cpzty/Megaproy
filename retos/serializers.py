@@ -57,6 +57,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             'enojado',
             'emocion_inicial',
             'emocion_final',
+            'puntos'
         )
 
 

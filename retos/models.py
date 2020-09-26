@@ -15,6 +15,8 @@ class Profile(models.Model):
     #emocion inicial capturada
     emocion_inicial = models.CharField(max_length=50, default='')
     emocion_final = models.CharField(max_length=50, default='')
+    #puntaje
+    puntos = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.user)
@@ -30,6 +32,20 @@ def save_user_profile(sender, instance, **kwargs):
 
 class Reto(models.Model):
     description = models.CharField(max_length=1000)
+
+class Caso_4p(models.Model):
+    pregunta1 = models.CharField(max_length=250)
+    pregunta2 = models.CharField(max_length=250)
+    pregunta3 = models.CharField(max_length=250)
+    pregunta4 = models.CharField(max_length=250)
+
+class Caso_4p_finalizado(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    pregunta1 = models.CharField(max_length=250)
+    pregunta2 = models.CharField(max_length=250)
+    pregunta3 = models.CharField(max_length=250)
+    pregunta4 = models.CharField(max_length=250)
+
 
 class Reto_finalizado(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

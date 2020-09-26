@@ -121,6 +121,8 @@ class ProfileRecordView(APIView):
                 objec.emocion_inicial = request.POST.get('emocion_inicial', '')
             if 'emocion_final' in request.POST:
                 objec.emocion_final = request.POST.get('emocion_final', '')
+            if 'puntos' in request.POST:
+                objec.puntos = request.POST.get('puntos', '')
 
             objec.save()
         serializer = ProfileSerializer(users, many=True)
