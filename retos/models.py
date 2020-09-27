@@ -3,6 +3,33 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.template.defaultfilters import slugify
+from django.core.validators import MaxValueValidator, MinValueValidator
+
+#cuestionario autoestima rosenberg
+class Cuestionario_autoestima(models.Model):
+    p1 = models.CharField(max_length=150, default='I feel that I am a person of worth, at least on an equal plane with others')
+    p2 = models.CharField(max_length=150, default='I feel that I have a number of good qualities')
+    p3 = models.CharField(max_length=150, default='All in all, I am inclined to feel that I am a failure (R)')
+    p4 = models.CharField(max_length=150, default='I am able to do things as well as most people')
+    p5 = models.CharField(max_length=150, default='I feel I do not have much to be proud of (R)')
+    p6 = models.CharField(max_length=150, default='I take a positive attitude toward myself')
+    p7 = models.CharField(max_length=150, default='On the whole, I am satisfied with myself')
+    p8 = models.CharField(max_length=150, default='I wish I could have more respect for myself (R)')
+    p9 = models.CharField(max_length=150, default='I certainly feel useless at times (R)')
+    p10 = models.CharField(max_length=150, default='At times I think that I am no good at all (R)')
+
+class Cuestionario_autoestima_respondido(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    r1 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    r2 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    r3 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    r4 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    r5 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    r6 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    r7 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    r8 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    r9 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    r10 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)

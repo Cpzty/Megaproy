@@ -1,10 +1,10 @@
-from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer
+from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 #from django.template.loader import render_to_string
@@ -51,6 +51,25 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     msg.send()
 
 
+class CuestionarioAEView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self):
+        cuestionario = Cuestionario_autoestima.objects.filter()[:1].get()
+        serializer = Cuestionario_AESerializer(cuestionario)
+        return Response(serializer.data)
+
+class CuestionarioAERView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        users = Cuestionario_autoestima_respondido.objects.filter(user=request.user)
+        serializer = Cuestionario_AERSerializer(users)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer = Cuestionario_AERSerializer(data=request.data)
+        Cuestionario_autoestima_respondido.objects.create(data=serializer.data)
+
+        #create
 
 class UserRecordView(APIView):
 
