@@ -127,7 +127,17 @@ class ProfileRecordView(APIView):
         users = Profile.objects.filter(user=request.user)
         for objec in users:
             if 'racha' in request.POST:
-                objec.racha += 1
+                if request.POST.get('racha', '') == 'reset':
+                    objec.racha = 0
+                    objec.alegre = 0
+                    objec.caraX = 0
+                    objec.triste = 0
+                    objec.enojado = 0
+                    objec.emocion_inicial = ''
+                    objec.emocion_final = ''
+                else:
+                    objec.racha += 1
+                    #dont reset points
             if 'alegre' in request.POST:
                 objec.alegre += 1
             if 'caraX' in request.POST:
@@ -141,7 +151,7 @@ class ProfileRecordView(APIView):
             if 'emocion_final' in request.POST:
                 objec.emocion_final = request.POST.get('emocion_final', '')
             if 'puntos' in request.POST:
-                objec.puntos = request.POST.get('puntos', '')
+                objec.puntos = object.puntos + request.POST.get('puntos', '')
 
             objec.save()
         serializer = ProfileSerializer(users, many=True)
