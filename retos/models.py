@@ -34,6 +34,16 @@ class Cuestionario_autoestima_respondido(models.Model):
     r9 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
     r10 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
 
+@receiver(post_save, sender=User)
+def create_aer(sender, instance, created, **kwargs):
+    if created:
+        Cuestionario_autoestima_respondido.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_aer(sender, instance, **kwargs):
+    instance.cuestionario_autoestima_respondido.save()
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     racha = models.IntegerField(default=0)
