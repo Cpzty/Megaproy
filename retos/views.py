@@ -83,6 +83,7 @@ class CuestionarioAERView(APIView):
         return Response(serializer.data)
     def post(self, request):
         serializer = Cuestionario_AERSerializer(data=request.data)
+        serializer.user = request.user
         if serializer.is_valid(raise_exception=ValueError):
             serializer.create(validated_data=serializer.data)
             return Response(
