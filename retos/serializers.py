@@ -5,6 +5,11 @@ from rest_framework.validators import UniqueTogetherValidator
 
 
 class Cuestionario_AESerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        cuestionario = Cuestionario_autoestima.objects.create(**validated_data)
+        return cuestionario
+
     class Meta:
         model = Cuestionario_autoestima
         fields = (
