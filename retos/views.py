@@ -96,6 +96,9 @@ class CuestionarioAERView(APIView):
             objec.r9 = request.POST.get('r9', 0)
             objec.r10 = request.POST.get('r10', 0)
 
+        objec.save()
+        serializer = Cuestionario_AERSerializer(users, many=True)
+        return Response(serializer.data)
 
 class UserRecordView(APIView):
 
