@@ -18,6 +18,9 @@ class Cuestionario_autoestima(models.Model):
     p9 = models.CharField(max_length=150, default='I certainly feel useless at times (R)')
     p10 = models.CharField(max_length=150, default='At times I think that I am no good at all (R)')
 
+
+
+
 class Cuestionario_autoestima_respondido(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     r1 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
