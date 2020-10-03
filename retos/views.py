@@ -79,7 +79,7 @@ class CuestionarioAERView(APIView):
 
     def get(self, request):
         users = Cuestionario_autoestima_respondido.objects.filter(user=request.user)
-        serializer = Cuestionario_AERSerializer(users)
+        serializer = Cuestionario_AERSerializer(users, many=True)
         return Response(serializer.data)
 
 class UserRecordView(APIView):
