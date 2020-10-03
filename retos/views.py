@@ -81,24 +81,6 @@ class CuestionarioAERView(APIView):
         users = Cuestionario_autoestima_respondido.objects.filter(user=request.user)
         serializer = Cuestionario_AERSerializer(users)
         return Response(serializer.data)
-    def post(self, request):
-        serializer = Cuestionario_AERSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=ValueError):
-            serializer.user = request.user
-            serializer.create(validated_data=serializer.data)
-            return Response(
-                serializer.data,
-                status=status.HTTP_201_CREATED
-            )
-        return Response(
-            {
-                "error": True,
-                "error_msg": serializer.error_messages,
-            },
-            status=status.HTTP_400_BAD_REQUEST
-        )
-
-    #create
 
 class UserRecordView(APIView):
 
