@@ -18,6 +18,18 @@ class Cuestionario_AESerializer(serializers.ModelSerializer):
 
 class Cuestionario_AERSerializer(serializers.ModelSerializer):
 
+    def update(self, instance, validated_data):
+        instance.r1 = validated_data.get('r1', instance.r1),
+        instance.r2 = validated_data.get('r2', instance.r2),
+        instance.r3 = validated_data.get('r3', instance.r3),
+        instance.r4 = validated_data.get('r4', instance.r4),
+        instance.r5 = validated_data.get('r5', instance.r5),
+        instance.r6 = validated_data.get('r6', instance.r6),
+        instance.r7 = validated_data.get('r7', instance.r7),
+        instance.r8 = validated_data.get('r8', instance.r8),
+        instance.r9 = validated_data.get('r9', instance.r9),
+        instance.r10 = validated_data.get('r10', instance.r10)
+
     class Meta:
         model = Cuestionario_autoestima_respondido
         fields = (

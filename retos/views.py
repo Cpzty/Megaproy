@@ -82,6 +82,21 @@ class CuestionarioAERView(APIView):
         serializer = Cuestionario_AERSerializer(users, many=True)
         return Response(serializer.data)
 
+    def put(self, request):
+        users = Cuestionario_autoestima_respondido.objects.filter(user=request.user)
+        for objec in users:
+            objec.r1 = request.POST.get('r1', 0)
+            objec.r2 = request.POST.get('r2', 0)
+            objec.r3 = request.POST.get('r3', 0)
+            objec.r4 = request.POST.get('r4', 0)
+            objec.r5 = request.POST.get('r5', 0)
+            objec.r6 = request.POST.get('r6', 0)
+            objec.r7 = request.POST.get('r7', 0)
+            objec.r8 = request.POST.get('r8', 0)
+            objec.r9 = request.POST.get('r9', 0)
+            objec.r10 = request.POST.get('r10', 0)
+
+
 class UserRecordView(APIView):
 
     permission_classes = [AllowAny]
