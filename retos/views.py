@@ -53,7 +53,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
 
 class CuestionarioAEView(APIView):
     permission_classes = [IsAuthenticated]
-    def get(self):
+    def get(self, request):
         cuestionario = Cuestionario_autoestima.objects.filter()[:1].get()
         serializer = Cuestionario_AESerializer(cuestionario)
         return Response(serializer.data)
