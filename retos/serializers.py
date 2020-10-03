@@ -18,6 +18,10 @@ class Cuestionario_AESerializer(serializers.ModelSerializer):
 
 class Cuestionario_AERSerializer(serializers.ModelSerializer):
 
+    def create(self, validated_data):
+        cuestionario_realizado = Cuestionario_autoestima_respondido.objects.create(**validated_data)
+        return cuestionario_realizado
+
     class Meta:
         model = Cuestionario_autoestima_respondido
         fields = (
