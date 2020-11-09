@@ -80,9 +80,10 @@ def create_pecr(sender, instance, created, **kwargs):
     if created:
         Cuestionario_PEC_Realizado.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_pecr(sender, instance, **kwargs):
-    instance.Cuestionario_PEC_Realizado.save()
+#@receiver(post_save, sender=User)
+#def save_pecr(sender, instance, **kwargs):
+#    instance.Cuestionario_PEC_Realizado.save()
+
 
 
 #p = models.CharField(max_length=150, default='')
