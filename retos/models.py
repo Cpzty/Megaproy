@@ -60,6 +60,15 @@ class Cuestionario_PEC_Realizado(models.Model):
     r49 = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)])
     r50 = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)])
 
+@receiver(post_save, sender=User)
+def create_aer(sender, instance, created, **kwargs):
+    if created:
+        Cuestionario_PEC_Realizado.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_aer(sender, instance, **kwargs):
+    instance.Cuestionario_PEC_Realizado.save()
+
 
 #p = models.CharField(max_length=150, default='')
 class Cuestionario_PEC(models.Model):

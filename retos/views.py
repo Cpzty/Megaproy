@@ -1,10 +1,10 @@
-from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer
+from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 #from django.template.loader import render_to_string
@@ -50,6 +50,95 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     #msg.attach_alternative(email_html_message, "text/html")
     msg.send()
 
+class CuestionarioPECView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self,request):
+        serializer = Cuestionario_PECSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create(validated_data=serializer.data)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            {
+            "error": True,
+            "error_msg": serializer.error_messages,
+            },
+            status=status.HTTP_400_BAD_REQUEST
+            )
+
+    def get(self, request):
+        cuestionario = Cuestionario_PEC.objects.filter()[:1].get()
+        serializer = Cuestionario_PECSerializer(cuestionario)
+        return Response(serializer.data)
+
+
+class CuestionarioPECRView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        users = Cuestionario_PEC_Realizado.objects.filter(user=request.user)
+        serializer = Cuestionario_PECRSerializer(users, many=True)
+        return Response(serializer.data)
+
+    def put(self, request):
+        users = Cuestionario_PEC_Realizado.objects.filter(user=request.user)
+        for objec in users:
+            objec.r1 = request.POST.get('r1', 0)
+            objec.r2 = request.POST.get('r2', 0)
+            objec.r3 = request.POST.get('r3', 0)
+            objec.r4 = request.POST.get('r4', 0)
+            objec.r5 = request.POST.get('r5', 0)
+            objec.r6 = request.POST.get('r6', 0)
+            objec.r7 = request.POST.get('r7', 0)
+            objec.r8 = request.POST.get('r8', 0)
+            objec.r9 = request.POST.get('r9', 0)
+            objec.r10 = request.POST.get('r10', 0)
+            objec.r11 = request.POST.get('r11', 0)
+            objec.r12 = request.POST.get('r12', 0)
+            objec.r13 = request.POST.get('r13', 0)
+            objec.r14 = request.POST.get('r14', 0)
+            objec.r15 = request.POST.get('r15', 0)
+            objec.r16 = request.POST.get('r16', 0)
+            objec.r17 = request.POST.get('r17', 0)
+            objec.r18 = request.POST.get('r18', 0)
+            objec.r19 = request.POST.get('r19', 0)
+            objec.r20 = request.POST.get('r20', 0)
+            objec.r21 = request.POST.get('r21', 0)
+            objec.r22 = request.POST.get('r22', 0)
+            objec.r23 = request.POST.get('r23', 0)
+            objec.r24 = request.POST.get('r24', 0)
+            objec.r25 = request.POST.get('r25', 0)
+            objec.r26 = request.POST.get('r26', 0)
+            objec.r27 = request.POST.get('r27', 0)
+            objec.r28 = request.POST.get('r28', 0)
+            objec.r29 = request.POST.get('r29', 0)
+            objec.r30 = request.POST.get('r30', 0)
+            objec.r31 = request.POST.get('r31', 0)
+            objec.r32 = request.POST.get('r32', 0)
+            objec.r33 = request.POST.get('r33', 0)
+            objec.r34 = request.POST.get('r34', 0)
+            objec.r35 = request.POST.get('r35', 0)
+            objec.r36 = request.POST.get('r36', 0)
+            objec.r37 = request.POST.get('r37', 0)
+            objec.r38 = request.POST.get('r38', 0)
+            objec.r39 = request.POST.get('r39', 0)
+            objec.r40 = request.POST.get('r40', 0)
+            objec.r41 = request.POST.get('r41', 0)
+            objec.r42 = request.POST.get('r42', 0)
+            objec.r43 = request.POST.get('r43', 0)
+            objec.r44 = request.POST.get('r44', 0)
+            objec.r45 = request.POST.get('r45', 0)
+            objec.r46 = request.POST.get('r46', 0)
+            objec.r47 = request.POST.get('r47', 0)
+            objec.r48 = request.POST.get('r48', 0)
+            objec.r49 = request.POST.get('r49', 0)
+            objec.r50 = request.POST.get('r50', 0)
+
+        objec.save()
+        serializer = Cuestionario_PECRSerializer(users, many=True)
+        return Response(serializer.data)
 
 class CuestionarioAEView(APIView):
     permission_classes = [IsAuthenticated]
