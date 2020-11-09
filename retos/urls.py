@@ -8,7 +8,7 @@ urlpatterns = [
     path('profile/', ProfileRecordView.as_view(), name='profiles'),
     path('auto_estima/', CuestionarioAEView.as_view(), name='auto_estima'),
     path('auto_estima_realizado/', CuestionarioAERView.as_view(), name='auto_estima_realizado'),
-    path('pec', CuestionarioPECView.as_view(), name='competencia_emocional'),
-    path('pec_realizado', CuestionarioPECRView.as_view(), name='competencia_emocional_realizado'),
+    path('pec/', CuestionarioPECView.as_view(), name='competencia_emocional'),
+    path('pec_realizado/', CuestionarioPECRView.as_view(), name='competencia_emocional_realizado'),
 
 ]

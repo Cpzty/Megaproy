@@ -124,6 +124,7 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         Profile.objects.create(user=user)
         Cuestionario_autoestima_respondido.objects.create(user=user)
+        Cuestionario_PEC_Realizado.objects.create(user=user)
         return user
 
     class Meta:
