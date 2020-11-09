@@ -7,8 +7,23 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 import datetime
 
+#p = models.CharField(max_length=150, default='')
+class Cuestionario_no(models.Model):
+    p1 = models.CharField(max_length=150, default='Mi compañero de trabajo me pide que haga un trabajo que no me corresponde…')
+    p2 = models.CharField(max_length=150, default='Cuando por la calle me paran para venderme algo, poner una firma, darme propaganda…')
+    p3 = models.CharField(max_length=150, default='Cuando alguien está contando una historia y yo sé que no ha ocurrido de esa manera…')
+    p4 = models.CharField(max_length=150, default='Mi jefe me pide que haga un trabajo que no teníamos previsto y para ello tengo que sacrificar tiempo personal…')
+    p5 = models.CharField(max_length=150, default='Cuando me ofrecen otra copa y yo ya no quiero más…')
+    p6 = models.CharField(max_length=150, default='Cuando me proponen ir al cine a ver una película que yo no quiero')
+    p7 = models.CharField(max_length=150, default='Cuando me quieren vender algo que no me convence después de que me han estado atendiendo un largo rato…')
+    p8 = models.CharField(max_length=150, default='Cuando mi pareja me propone hacer un plan que no me apetece en absoluto…')
+    p9 = models.CharField(max_length=150, default='Si alguien que tampoco me gusta tanto me invita a salir…')
+    p10 = models.CharField(max_length=150, default='En la sala de espera del médico o esperando una fila para pagar, alguien me pide pasar antes que yo…')
+    p11 = models.CharField(max_length=150, default='Cuando un “listo/a” me quita el sitio de aparcamiento por el que yo estaba esperando…')
+    p12 = models.CharField(max_length=150, default='Cuando mi familia me dice que vaya a comer con ellos un día que me viene realmente mal…')
 
 class Cuestionario_PEC_Realizado(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     r1 = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)])
     r2 = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)])
     r3 = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)])
