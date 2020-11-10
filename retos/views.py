@@ -1,10 +1,10 @@
-from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer
+from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer, Cuestionario_NOSerializer, Cuestionario_NORSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 #from django.template.loader import render_to_string
@@ -49,6 +49,142 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     )
     #msg.attach_alternative(email_html_message, "text/html")
     msg.send()
+
+class CuestionarioNORView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        users = Cuestionario_no_realizado.objects.filter(user=request.user)
+        serializer = Cuestionario_NORSerializer(users, many=True)
+        return Response(serializer.data)
+
+    def put(self, request):
+        users = Cuestionario_no_realizado.objects.filter(user=request.user)
+        for objec in users:
+            objec.r1 = request.POST.get('r1', '')
+            #if objec.r1 == 'a':
+             #   objec.r1 = 0
+            #elif objec.r1 == 'b':
+             #   objec.r1 = 2
+            #elif objec.r1 == 'c':
+             #   objec.r1 = 1
+
+            objec.r2 = request.POST.get('r2', '')
+            #if objec.r2 == 'a':
+             #   objec.r1 = 2
+            #elif objec.r2 == 'b':
+             #   objec.r1 = 0
+            #elif objec.r2 == 'c':
+             #   objec.r1 = 1
+
+            objec.r3 = request.POST.get('r3', '')
+            #if objec.r3 == 'a':
+             #   objec.r1 = 0
+            #elif objec.r3 == 'b':
+             #   objec.r1 = 1
+            #elif objec.r3 == 'c':
+             #   objec.r1 = 2
+
+            objec.r4 = request.POST.get('r4', '')
+            #if objec.r4 == 'a':
+             #   objec.r1 = 0
+            #elif objec.r4 == 'b':
+             #   objec.r1 = 2
+            #elif objec.r4 == 'c':
+             #   objec.r1 = 1
+
+            objec.r5 = request.POST.get('r5', '')
+            #if objec.r5 == 'a':
+             #   objec.r1 = 0
+            #elif objec.r5 == 'b':
+             #   objec.r1 = 2
+            #elif objec.r5 == 'c':
+            #    objec.r1 = 1
+
+            objec.r6 = request.POST.get('r6', '')
+            #if objec.r6 == 'a':
+             #   objec.r1 = 0
+            #elif objec.r6 == 'b':
+            #    objec.r1 = 1
+            #elif objec.r6 == 'c':
+              #  objec.r1 = 2
+
+            objec.r7 = request.POST.get('r7', '')
+            #if objec.r7 == 'a':
+             #   objec.r1 = 2
+            #elif objec.r7 == 'b':
+             #   objec.r1 = 1
+            #elif objec.r7 == 'c':
+             #   objec.r1 = 0
+
+            objec.r8 = request.POST.get('r8', '')
+            #if objec.r8 == 'a':
+             #   objec.r1 = 0
+            #elif objec.r8 == 'b':
+             #   objec.r1 = 1
+            #elif objec.r8 == 'c':
+             #   objec.r1 = 2
+
+            objec.r9 = request.POST.get('r9', '')
+            #if objec.r9 == 'a':
+             #   objec.r1 = 1
+            #elif objec.r9 == 'b':
+             #   objec.r1 = 0
+            #elif objec.r9 == 'c':
+             #   objec.r1 = 2
+
+            objec.r10 = request.POST.get('r10', '')
+            #if objec.r10 == 'a':
+             #   objec.r1 = 2
+            #elif objec.r10 == 'b':
+             #   objec.r1 = 1
+            #elif objec.r10 == 'c':
+             #   objec.r1 = 0
+
+            objec.r11 = request.POST.get('r11', '')
+            #if objec.r11 == 'a':
+             #   objec.r1 = 0
+            #elif objec.r11 == 'b':
+             #   objec.r1 = 2
+            #elif objec.r11 == 'c':
+             #   objec.r1 = 1
+
+            objec.r12 = request.POST.get('r12', '')
+            #if objec.r12 == 'a':
+             #   objec.r1 = 2
+            #elif objec.r12 == 'b':
+             #   objec.r1 = 0
+            #elif objec.r12 == 'c':
+                #objec.r1 = 1
+
+        objec.save()
+        serializer = Cuestionario_NORSerializer(users, many=True)
+        return Response(serializer.data)
+
+
+class CuestionarioNOView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self,request):
+        serializer = Cuestionario_NOSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create(validated_data=serializer.data)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            {
+            "error": True,
+            "error_msg": serializer.error_messages,
+            },
+            status=status.HTTP_400_BAD_REQUEST
+            )
+
+    def get(self, request):
+        cuestionario = Cuestionario_no.objects.filter()[:1].get()
+        serializer = Cuestionario_NOSerializer(cuestionario)
+        return Response(serializer.data)
+
 
 class CuestionarioPECView(APIView):
     permission_classes = [IsAuthenticated]

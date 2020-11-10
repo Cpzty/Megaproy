@@ -7,6 +7,31 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 import datetime
 
+class Cuestionario_no_realizado(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    r1 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r2 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r3 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r4 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r5 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r6 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r7 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r8 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r9 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r10 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r11 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r12 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+
+@receiver(post_save, sender=User)
+def create_nor(sender, instance, created, **kwargs):
+    if created:
+        Cuestionario_no_realizado.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_nor(sender, instance, **kwargs):
+    instance.Cuestionario_no_realizado.save()
+
+
 #p = models.CharField(max_length=150, default='')
 class Cuestionario_no(models.Model):
     p1 = models.CharField(max_length=150, default='Mi compañero de trabajo me pide que haga un trabajo que no me corresponde…')

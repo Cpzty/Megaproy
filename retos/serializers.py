@@ -1,7 +1,41 @@
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
+
+class Cuestionario_NOSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        cuestionario = Cuestionario_no.objects.create(**validated_data)
+        return cuestionario
+
+    class Meta:
+        model = Cuestionario_no
+        fields = (
+            'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9', 'p10', 'p11', 'p12'
+        )
+
+class Cuestionario_NORSerializer(serializers.ModelSerializer):
+
+    def update(self, instance, validated_data):
+        instance.r1 = validated_data.get('r1', instance.r1),
+        instance.r2 = validated_data.get('r2', instance.r2),
+        instance.r3 = validated_data.get('r3', instance.r3),
+        instance.r4 = validated_data.get('r4', instance.r4),
+        instance.r5 = validated_data.get('r5', instance.r5),
+        instance.r6 = validated_data.get('r6', instance.r6),
+        instance.r7 = validated_data.get('r7', instance.r7),
+        instance.r8 = validated_data.get('r8', instance.r8),
+        instance.r9 = validated_data.get('r9', instance.r9),
+        instance.r10 = validated_data.get('r10', instance.r10),
+        instance.r11 = validated_data.get('r11', instance.r11),
+        instance.r12 = validated_data.get('r12', instance.r12)
+
+    class Meta:
+        model = Cuestionario_PEC_Realizado
+        fields = (
+            'r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12'
+        )
+
 
 
 class Cuestionario_PECRSerializer(serializers.ModelSerializer):
