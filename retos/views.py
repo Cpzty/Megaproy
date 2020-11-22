@@ -62,12 +62,12 @@ class CuestionarioNORView(APIView):
         users = Cuestionario_no_realizado.objects.filter(user=request.user)
         for objec in users:
             objec.r1 = request.POST.get('r1', '')
-            #if objec.r1 == 'a':
-             #   objec.r1 = 0
-            #elif objec.r1 == 'b':
-             #   objec.r1 = 2
-            #elif objec.r1 == 'c':
-             #   objec.r1 = 1
+            if objec.r1 == 'a':
+                objec.r1 = 0
+            elif objec.r1 == 'b':
+                objec.r1 = 2
+            elif objec.r1 == 'c':
+                objec.r1 = 1
 
             objec.r2 = request.POST.get('r2', '')
             #if objec.r2 == 'a':

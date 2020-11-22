@@ -173,18 +173,30 @@ class Historial_emociones(models.Model):
     fecha_registrada = models.DateTimeField(default=datetime.date.today)
 
 #cuestionario autoestima rosenberg
-class Cuestionario_autoestima(models.Model):
-    p1 = models.CharField(max_length=150, default='I feel that I am a person of worth, at least on an equal plane with others')
-    p2 = models.CharField(max_length=150, default='I feel that I have a number of good qualities')
-    p3 = models.CharField(max_length=150, default='All in all, I am inclined to feel that I am a failure (R)')
-    p4 = models.CharField(max_length=150, default='I am able to do things as well as most people')
-    p5 = models.CharField(max_length=150, default='I feel I do not have much to be proud of (R)')
-    p6 = models.CharField(max_length=150, default='I take a positive attitude toward myself')
-    p7 = models.CharField(max_length=150, default='On the whole, I am satisfied with myself')
-    p8 = models.CharField(max_length=150, default='I wish I could have more respect for myself (R)')
-    p9 = models.CharField(max_length=150, default='I certainly feel useless at times (R)')
-    p10 = models.CharField(max_length=150, default='At times I think that I am no good at all (R)')
+#class Cuestionario_autoestima(models.Model):
+    #p1 = models.CharField(max_length=150, default='I feel that I am a person of worth, at least on an equal plane with others')
+    #p2 = models.CharField(max_length=150, default='I feel that I have a number of good qualities')
+    #p3 = models.CharField(max_length=150, default='All in all, I am inclined to feel that I am a failure (R)')
+    #p4 = models.CharField(max_length=150, default='I am able to do things as well as most people')
+    #p5 = models.CharField(max_length=150, default='I feel I do not have much to be proud of (R)')
+    #p6 = models.CharField(max_length=150, default='I take a positive attitude toward myself')
+   # p7 = models.CharField(max_length=150, default='On the whole, I am satisfied with myself')
+  #  p8 = models.CharField(max_length=150, default='I wish I could have more respect for myself (R)')
+ #   p9 = models.CharField(max_length=150, default='I certainly feel useless at times (R)')
+#    p10 = models.CharField(max_length=150, default='At times I think that I am no good at all (R)')
 
+
+class Cuestionario_autoestima(models.Model):
+    p1 = models.CharField(max_length=150, default='Siento que soy una persona digna de aprecio, al menos en igual  medida que los demás')
+    p2 = models.CharField(max_length=150, default='Me inclino a pensar que, en conjunto, soy un fracasado')
+    p3 = models.CharField(max_length=150, default='Creo que tengo varias cualidades buenas')
+    p4 = models.CharField(max_length=150, default='Puedo hacer las cosas tan bien como la mayoría de la gente')
+    p5 = models.CharField(max_length=150, default='Creo que no tengo muchos motivos para sentirme orgulloso de mí')
+    p6 = models.CharField(max_length=150, default='Tengo una actitud positiva hacia mí mismo')
+    p7 = models.CharField(max_length=150, default='En general, estoy satisfecho conmigo mismo')
+    p8 = models.CharField(max_length=150, default='Desearía valorarme más a mí mismo')
+    p9 = models.CharField(max_length=150, default='A veces me siento verdaderamente inútil')
+    p10 = models.CharField(max_length=150, default='A veces pienso que no sirvo para nada')
 
 
 
