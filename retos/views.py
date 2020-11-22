@@ -295,7 +295,7 @@ class CuestionarioAEView(APIView):
             )
 
     def get(self, request):
-        cuestionario = Cuestionario_autoestima.objects.filter().get().reverse()[0]
+        cuestionario = Cuestionario_autoestima.objects.filter().get().reverse()[:1]
         serializer = Cuestionario_AESerializer(cuestionario)
         return Response(serializer.data)
 
