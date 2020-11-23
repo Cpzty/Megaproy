@@ -27,9 +27,9 @@ def create_nor(sender, instance, created, **kwargs):
     if created:
         Cuestionario_no_realizado.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_nor(sender, instance, **kwargs):
-    instance.Cuestionario_no_realizado.save()
+#@receiver(post_save, sender=User)
+#def save_nor(sender, instance, **kwargs):
+#    instance.Cuestionario_no_realizado.save()
 
 
 #p = models.CharField(max_length=150, default='')
