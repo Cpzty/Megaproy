@@ -205,7 +205,7 @@ class CuestionarioPECView(APIView):
             )
 
     def get(self, request):
-        cuestionario = Cuestionario_PEC.objects.filter()[:1].get()
+        cuestionario = Cuestionario_PEC.objects.filter()[1:2].get()
         serializer = Cuestionario_PECSerializer(cuestionario)
         return Response(serializer.data)
 
