@@ -27,6 +27,10 @@ def create_comur(sender, instance, created, **kwargs):
     if created:
         Cuestionario_comunicacion_realizado.objects.create(user=instance)
 
+@receiver(post_save, sender=User)
+def save_nor(sender, instance, **kwargs):
+    instance.Cuestionario_comunicacion_efectiva.save()
+
 
 class Cuestionario_comunicacion_efectiva(models.Model):
     p1 = models.CharField(max_length=150, default='Cuando se que tengo derecho a algo (por ejemplo quejarme, expresar mi opinion, etcetera')
