@@ -193,6 +193,7 @@ class UserSerializer(serializers.ModelSerializer):
         Profile.objects.create(user=user)
         Cuestionario_autoestima_respondido.objects.create(user=user)
         Cuestionario_PEC_Realizado.objects.create(user=user)
+        Cuestionario_comunicacion_realizado.create(user=user)
         return user
 
     class Meta:
