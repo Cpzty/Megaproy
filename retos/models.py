@@ -7,6 +7,42 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 import datetime
 
+class Cuestionario_comunicacion_realizado(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    r1 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r2 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r3 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r4 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r5 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r6 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r7 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r8 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r9 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r10 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r11 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    r12 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+
+@receiver(post_save, sender=User)
+def create_comur(sender, instance, created, **kwargs):
+    if created:
+        Cuestionario_comunicacion_realizado.objects.create(user=instance)
+
+
+class Cuestionario_comunicacion_efectiva(models.Model):
+    p1 = models.CharField(max_length=150, default='Cuando se que tengo derecho a algo (por ejemplo quejarme, expresar mi opinion, etcetera')
+    p2 = models.CharField(max_length=150, default='En las situaciones en las que no estoy de acuerdo con la opinion del otro…')
+    p3 = models.CharField(max_length=150, default='Tus intereses chocan con los de tu pareja, amigo… ¿que haces?…')
+    p4 = models.CharField(max_length=150, default='En el trabajo te piden hacer una tarea que no te da tiempo a realizar…')
+    p5 = models.CharField(max_length=150, default='Tu amigo te debe dinero…')
+    p6 = models.CharField(max_length=150, default='Cuando alguien no ha cumplido con algo a lo que se había comprometido…')
+    p7 = models.CharField(max_length=150, default='Estas esperando en una fila y alguien se "ha colado"…')
+    p8 = models.CharField(max_length=150, default='Alguien te pide un favor que no estas dispuesto a hacer…')
+    p9 = models.CharField(max_length=150, default='Cada vez que tengo que llevar la contraria a alguien…')
+    p10 = models.CharField(max_length=150, default='Cuando me niego a hacer lo que otros me han pedido…')
+    p11 = models.CharField(max_length=150, default='A la hora de expresar tu opinion, ¿que palabras empleas mas?')
+    p12 = models.CharField(max_length=150, default='A la hora de expresar tu opinion, ¿como son tus gestos?')
+
+
 class Cuestionario_no_realizado(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     r1 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
