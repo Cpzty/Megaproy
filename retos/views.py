@@ -332,7 +332,7 @@ class CuestionarioPECView(APIView):
             )
 
     def get(self, request):
-        cuestionario = Cuestionario_PEC.objects.filter()[-2:-1].get()
+        cuestionario = Cuestionario_PEC.objects.all().order_by('-id')[0]
         serializer = Cuestionario_PECSerializer(cuestionario)
         return Response(serializer.data)
 
