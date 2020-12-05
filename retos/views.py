@@ -15,16 +15,7 @@ from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
-    """
-    Handles password reset tokens
-    When a token is created, an e-mail needs to be sent to the user
-    :param sender: View Class that sent the signal
-    :param instance: View Instance that sent the signal
-    :param reset_password_token: Token Model Object
-    :param args:
-    :param kwargs:
-    :return:
-    """
+
     # send an e-mail to the user
     context = {
         'current_user': reset_password_token.user,
@@ -341,7 +332,7 @@ class CuestionarioPECView(APIView):
             )
 
     def get(self, request):
-        cuestionario = Cuestionario_PEC.objects.filter()[1:2].get()
+        cuestionario = Cuestionario_PEC.objects.filter()[-2:-1].get()
         serializer = Cuestionario_PECSerializer(cuestionario)
         return Response(serializer.data)
 
