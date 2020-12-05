@@ -172,7 +172,7 @@ class CuestionarioComunicacionView(APIView):
             )
 
     def get(self, request):
-        cuestionario = Cuestionario_comunicacion_efectiva.objects.filter()[:1].get()
+        cuestionario = Cuestionario_comunicacion_efectiva.objects.all().order_by('-id')[0]
         serializer = Cuestionario_ComunicacionSerializer(cuestionario)
         return Response(serializer.data)
 
@@ -308,7 +308,7 @@ class CuestionarioNOView(APIView):
             )
 
     def get(self, request):
-        cuestionario = Cuestionario_no.objects.filter()[:1].get()
+        cuestionario = Cuestionario_no.objects.all().order_by('-id')[0]
         serializer = Cuestionario_NOSerializer(cuestionario)
         return Response(serializer.data)
 
@@ -422,7 +422,7 @@ class CuestionarioAEView(APIView):
             )
 
     def get(self, request):
-        cuestionario = Cuestionario_autoestima.objects.filter()[1:2].get()
+        cuestionario = Cuestionario_autoestima.objects.all().order_by('-id')[0]
         serializer = Cuestionario_AESerializer(cuestionario)
         return Response(serializer.data)
 
