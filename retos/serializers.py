@@ -1,7 +1,20 @@
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
+
+class Historial_emocionesSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        historial = Historial_emociones.objects.create(**validated_data)
+        return historial
+
+    class Meta:
+        model = Historial_emociones
+        fields = (
+            'emocion_inicial',
+            'emocion_final',
+            'fecha_registrada'
+        )
 
 class Cuestionario_ComunicacionSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
@@ -194,6 +207,7 @@ class UserSerializer(serializers.ModelSerializer):
         Cuestionario_autoestima_respondido.objects.create(user=user)
         Cuestionario_PEC_Realizado.objects.create(user=user)
         Cuestionario_comunicacion_realizado.create(user=user)
+
         return user
 
     class Meta:
