@@ -4,8 +4,8 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 class Historial_emocionesSerializer(serializers.ModelSerializer):
-    def create(self, validated_data):
-        historial = Historial_emociones.objects.create(**validated_data)
+    def create(self, validated_data, user):
+        historial = Historial_emociones.objects.create(user=user, **validated_data)
         return historial
 
     class Meta:
