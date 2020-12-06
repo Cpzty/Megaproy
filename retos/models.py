@@ -241,7 +241,7 @@ class Cuestionario_autoestima(models.Model):
 
 
 class Cuestionario_autoestima_respondido(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     r1 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
     r2 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
     r3 = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
