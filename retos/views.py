@@ -52,7 +52,7 @@ class HistorialEmocionesView(APIView):
     def post(self, request):
         serializer = Historial_emocionesSerializer(data=request.data)
         if serializer.is_valid(raise_exception=ValueError):
-            serializer.create(validated_data=serializer.data)
+            serializer.create(validated_data=serializer.data, user=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
