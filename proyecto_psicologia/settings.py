@@ -80,7 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'proyecto_psicologia.wsgi.application'
 
-
+#re
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
