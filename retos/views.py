@@ -65,6 +65,29 @@ class HistorialEmocionesView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+class RetoRecordView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        retos = Reto_finalizado.objects.filter(user=request.user, fecha_registrada=request.fecha_registrada)
+        serializer = RetoSerializer(retos)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = RetoSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create(validated_data=serializer.data, user=request.user)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            {
+                "error": True,
+                "error_msg": serializer.error_messages,
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
 
 class CuestionarioComunicacionRView(APIView):
     permission_classes = [IsAuthenticated]
@@ -507,12 +530,6 @@ class UserRecordView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-class RetoRecordView(APIView):
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        retos = Reto_finalizado.objects.filter(user=request.user)
-        serializer = RetoSerializer(retos)
-        return Response(serializer.data)
 
 class CuestionarioRecordView(APIView):
     permission_classes = [IsAuthenticated]

@@ -3,6 +3,17 @@ from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoest
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
+class RetoSerializer(serializers.ModelSerializer):
+    def create(self, validated_data, user):
+        reto = Reto_finalizado.objects.create(user=user, **validated_data)
+        return reto
+    class Meta:
+        model = Reto_finalizado
+        fields = (
+            'respuesta',
+            'fecha_registrada',
+        )
+
 class Historial_emocionesSerializer(serializers.ModelSerializer):
     def create(self, validated_data, user):
         historial = Historial_emociones.objects.create(user=user, **validated_data)
@@ -260,12 +271,4 @@ class ProfileSerializer(serializers.ModelSerializer):
         )
 
 
-class RetoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Reto_finalizado
-        fields = (
-            'user',
-            'reto',
-            'finalizado',
 
-        )

@@ -308,8 +308,8 @@ class Caso_4p_finalizado(models.Model):
 
 class Reto_finalizado(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    reto = models.ForeignKey(Reto, on_delete=models.CASCADE)
-    finalizado = models.BooleanField(default=False)
+    respuesta = models.CharField(max_length=250)
+    fecha_registrada = models.DateTimeField(default=datetime.date.today)
 
 
 class Cuestionario(models.Model):
