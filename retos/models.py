@@ -207,7 +207,7 @@ class Cuestionario_PEC(models.Model):
 #historial de emociones
 #falta serializador y view
 class Historial_emociones(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     emocion_inicial = models.CharField(max_length=50, default='')
     emocion_final = models.CharField(max_length=50, default='')
     fecha_registrada = models.DateTimeField(default=datetime.date.today)
