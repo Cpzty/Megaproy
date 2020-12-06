@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserRecordView, ProfileRecordView, CuestionarioAEView, CuestionarioAERView, CuestionarioPECView, CuestionarioPECRView, CuestionarioNOView, CuestionarioNORView, CuestionarioComunicacionView,CuestionarioComunicacionRView, HistorialEmocionesView
+from .views import UserRecordView, ProfileRecordView, CuestionarioAEView, CuestionarioAERView, CuestionarioPECView, CuestionarioPECRView, CuestionarioNOView, CuestionarioNORView, CuestionarioComunicacionView,CuestionarioComunicacionRView, HistorialEmocionesView, RetoRecordView
 
 app_name = 'retos'
 urlpatterns = [
@@ -15,5 +15,6 @@ urlpatterns = [
     path('comunicacion_efectiva/', CuestionarioComunicacionView.as_view(), name='cuestionario_comunicacion_efectiva'),
     path('comunicacion_efectiva_realizado/', CuestionarioComunicacionRView.as_view(), name='cuestionario_comunicacion_efectiva_realizado'),
     path('historial_emociones/', HistorialEmocionesView.as_view(),name='historial_emociones'),
+    path('reto_finalizado/', RetoRecordView.as_view(), name='reto_finalizado'),
 
 ]
