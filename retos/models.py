@@ -308,6 +308,7 @@ class Caso_4p_finalizado(models.Model):
 
 class Reto_finalizado(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    name  = models.CharField(max_length=75, default='')
     respuesta = models.CharField(max_length=250, default='')
     fecha_registrada = models.DateTimeField(default=datetime.date.today)
 

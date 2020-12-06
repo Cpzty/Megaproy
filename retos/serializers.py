@@ -10,6 +10,7 @@ class RetoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reto_finalizado
         fields = (
+            'name',
             'respuesta',
             'fecha_registrada',
         )
