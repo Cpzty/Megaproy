@@ -30,9 +30,9 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
 
     msg = EmailMultiAlternatives(
         # title:
-        "Password Reset for {title}".format(title="Some website title"),
+        "Cambio de contraseña {title}".format(title="Appsertividad"),
         # message:
-        'Please use this token: {} at http://127.0.0.1:8000/api/password_reset/confirm/'.format(reset_password_token.key),
+        'Utiliza este token: {} para cambiar tu contraseña'.format(reset_password_token.key),
         # from:
         "noreply@somehost.local",
         # to:
@@ -552,34 +552,16 @@ class ProfileRecordView(APIView):
             if 'racha' in request.POST:
                 if request.POST.get('racha', '') == 'reset':
                     objec.racha = 0
-                    objec.alegre = 0
-                    objec.caraX = 0
-                    objec.triste = 0
-                    objec.enojado = 0
-                    objec.emocion_inicial = ''
-                    objec.emocion_final = ''
+
                 else:
                     objec.racha += 1
-                    #dont reset points
-            if 'alegre' in request.POST:
-                objec.alegre += 1
-            if 'caraX' in request.POST:
-                objec.caraX += 1
-            if 'triste' in request.POST:
-                objec.triste += 1
-            if 'enojado' in request.POST:
-                objec.enojado += 1
-            if 'emocion_inicial' in request.POST:
-                objec.emocion_inicial = request.POST.get('emocion_inicial', '')
-            if 'emocion_final' in request.POST:
-                objec.emocion_final = request.POST.get('emocion_final', '')
+                    #no resetear puntos
             if 'puntos' in request.POST:
                 objec.puntos = int(objec.puntos) + int(request.POST.get('puntos', ''))
 
             objec.save()
         serializer = ProfileSerializer(users, many=True)
         return Response(serializer.data)
-
 
 class ProfileUpView(UpdateView):
     model = Profile

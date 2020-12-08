@@ -262,18 +262,14 @@ def create_aer(sender, instance, created, **kwargs):
 def save_aer(sender, instance, **kwargs):
     instance.cuestionario_autoestima_respondido.save()
 
+class Estadísticas_emociones(models.Model):
+    User = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    emoción_registrada = models.CharField(max_length=50, default='')
+    fecha_registrada = models.DateTimeField(default=datetime.date.today)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     racha = models.IntegerField(default=0)
-    #caritas
-    alegre = models.IntegerField(default=0)
-    caraX = models.IntegerField(default=0)
-    triste = models.IntegerField(default=0)
-    enojado = models.IntegerField(default=0)
-    #emocion inicial capturada
-    emocion_inicial = models.CharField(max_length=50, default='')
-    emocion_final = models.CharField(max_length=50, default='')
     #puntaje
     puntos = models.IntegerField(default=0)
 

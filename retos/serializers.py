@@ -253,21 +253,11 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.racha = validated_data.get('racha', instance.racha)
-        instance.alegre = validated_data.get('alegre', instance.alegre)
-        instance.caraX = validated_data.get('caraX', instance.caraX)
-        instance.triste = validated_data.get('triste', instance.triste)
-        instance.enojado = validated_data.get('enojado', instance.enojado)
 
     class Meta:
         model = Profile
         fields = (
             'racha',
-            'alegre',
-            'caraX',
-            'triste',
-            'enojado',
-            'emocion_inicial',
-            'emocion_final',
             'puntos'
         )
 
