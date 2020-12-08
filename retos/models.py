@@ -4,8 +4,23 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.exceptions import ValidationError
 
 import datetime
+
+class Cuestionarios(models.Model):
+    titulo = models.CharField(max_length=75, blank=False)
+
+class Preguntas(models.Model):
+    cuestionario = models.ManyToManyField(Cuestionarios, blank=False)
+    pregunta = models.CharField(max_length=75, blank=False)
+
+
+class Respuestas(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    pregunta = models.ForeignKey(Preguntas, on_delete=models.CASCADE, default=None)
+    respuesta = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
+
 
 class Cuestionario_comunicacion_realizado(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
@@ -262,10 +277,12 @@ def create_aer(sender, instance, created, **kwargs):
 def save_aer(sender, instance, **kwargs):
     instance.cuestionario_autoestima_respondido.save()
 
-class Estadísticas_emociones(models.Model):
-    User = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    emoción_registrada = models.CharField(max_length=50, default='')
-    fecha_registrada = models.DateTimeField(default=datetime.date.today)
+#
+#class Estadísticas_emociones(models.Model):
+    #User = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    #emoción_registrada = models.CharField(max_length=50, default='')
+    #fecha_registrada = models.DateTimeField(default=datetime.date.today)
+#
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)

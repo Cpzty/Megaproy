@@ -1,7 +1,40 @@
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
+
+class CuestionariosSerializer(serializers.ModelSerializer):
+    def create(self, validated_data, user):
+        cuestionario = Cuestionarios.objects.create(user=user, **validated_data)
+        return cuestionario
+    class Meta:
+        model = Cuestionarios
+        fields = (
+            'titulo'
+        )
+
+class PreguntasSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        pregunta = Preguntas.objects.create(**validated_data)
+        return pregunta
+    class Meta:
+        model = Cuestionarios
+        fields = (
+            'cuestionario',
+            'pregunta'
+        )
+
+class RespuestasSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        respuesta = Respuestas.objects.create(**validated_data)
+        return respuesta
+    class Meta:
+        model = Cuestionarios
+        fields = (
+            'cuestionario',
+            'pregunta'
+        )
+
 
 class RetoSerializer(serializers.ModelSerializer):
     def create(self, validated_data, user):
