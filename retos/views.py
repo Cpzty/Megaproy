@@ -45,9 +45,25 @@ class CuestionariosView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        users = Historial_emociones.objects.filter(titulo=request.titulo)
-        serializer = CuestionarioSerializer()
+        titulos = Historial_emociones.objects.filter(titulo=request.titulo)
+        serializer = CuestionarioSerializer(titulos, many=True)
         return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CuestionarioSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create(validated_data=serializer.data, user=request.user)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            {
+                "error": True,
+                "error_msg": serializer.error_messages,
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
 class HistorialEmocionesView(APIView):
     permission_classes = [IsAuthenticated]
