@@ -52,7 +52,7 @@ class CuestionariosView(APIView):
     def post(self, request):
         serializer = CuestionariosSerializer(data=request.data)
         if serializer.is_valid(raise_exception=ValueError):
-            serializer.create(validated_data=serializer.data, user=request.user)
+            serializer.create(validated_data=serializer.data)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
