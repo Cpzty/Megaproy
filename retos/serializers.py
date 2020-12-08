@@ -4,13 +4,13 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 class CuestionariosSerializer(serializers.ModelSerializer):
-    def create(self, validated_data, user):
-        cuestionario = Cuestionarios.objects.create(user=user, **validated_data)
+    def create(self, validated_data):
+        cuestionario = Cuestionarios.objects.create(**validated_data)
         return cuestionario
     class Meta:
         model = Cuestionarios
         fields = (
-            'titulo'
+            'titulo',
         )
 
 class PreguntasSerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class PreguntasSerializer(serializers.ModelSerializer):
         pregunta = Preguntas.objects.create(**validated_data)
         return pregunta
     class Meta:
-        model = Cuestionarios
+        model = Preguntas
         fields = (
             'cuestionario',
             'pregunta'
@@ -29,7 +29,7 @@ class RespuestasSerializer(serializers.ModelSerializer):
         respuesta = Respuestas.objects.create(**validated_data)
         return respuesta
     class Meta:
-        model = Cuestionarios
+        model = Respuestas
         fields = (
             'cuestionario',
             'pregunta'
