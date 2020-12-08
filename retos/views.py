@@ -44,11 +44,6 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
 class CuestionariosView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        titulos = Cuestionarios.objects.filter(Titulo=request.titulo)
-        serializer = CuestionariosSerializer(titulos, many=True)
-        return Response(serializer.data)
-
     def post(self, request):
         serializer = CuestionariosSerializer(data=request.data)
         if serializer.is_valid(raise_exception=ValueError):
