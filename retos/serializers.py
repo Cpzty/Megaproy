@@ -271,6 +271,15 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 
+class CuestionarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cuestionario
+        fields = (
+            'name',
+            'questions_count',
+            'description',
+
+        )
 
 
 class ProfileSerializer(serializers.ModelSerializer):
