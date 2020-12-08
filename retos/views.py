@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 #from django.template.loader import render_to_string
@@ -41,9 +41,16 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     #msg.attach_alternative(email_html_message, "text/html")
     msg.send()
 
+class CuestionariosView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        users = Historial_emociones.objects.filter(titulo=request.titulo)
+        serializer = CuestionarioSerializer()
+        return Response(serializer.data)
+
 class HistorialEmocionesView(APIView):
-    permission_classes = [IsAuthenticated
-                          ]
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         users =  Historial_emociones.objects.filter(user=request.user, fecha_registrada=request.fecha_registrada)
         serializer = Historial_emocionesSerializer(users, many=True)
