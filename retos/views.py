@@ -70,7 +70,7 @@ class CuestionariosView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        cuestionarios = Cuestionarios.objects.filter(titulo=request.data)
+        cuestionarios = Cuestionarios.objects.filter(titulo=request.data.titulo)
         serializer = CuestionariosSerializer(cuestionarios, many=True)
         return  Response(serializer.data)
 
