@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer, Cuestionario_NOSerializer, Cuestionario_NORSerializer, Cuestionario_ComunicacionSerializer, Cuestionario_ComunicacionRSerializer, Historial_emocionesSerializer
+from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer, Cuestionario_NOSerializer, Cuestionario_NORSerializer, Cuestionario_ComunicacionSerializer, Cuestionario_ComunicacionRSerializer, Historial_emocionesSerializer, CuestionariosSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -45,12 +45,12 @@ class CuestionariosView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        titulos = Historial_emociones.objects.filter(titulo=request.titulo)
+        titulos = Cuestionarios.objects.filter(titulo=request.titulo)
         serializer = CuestionarioSerializer(titulos, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = CuestionarioSerializer(data=request.data)
+        serializer = CuestionariosSerializer(data=request.data)
         if serializer.is_valid(raise_exception=ValueError):
             serializer.create(validated_data=serializer.data, user=request.user)
             return Response(
