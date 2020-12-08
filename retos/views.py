@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer, Cuestionario_NOSerializer, Cuestionario_NORSerializer, Cuestionario_ComunicacionSerializer, Cuestionario_ComunicacionRSerializer, Historial_emocionesSerializer, CuestionariosSerializer
+from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer, Cuestionario_NOSerializer, Cuestionario_NORSerializer, Cuestionario_ComunicacionSerializer, Cuestionario_ComunicacionRSerializer, Historial_emocionesSerializer, CuestionariosSerializer, PreguntasSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -40,6 +40,31 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     )
     #msg.attach_alternative(email_html_message, "text/html")
     msg.send()
+
+class PreguntasView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        preguntas =  Preguntas.objects.filter(cuestionario=request.cuestionario)
+        serializer = PreguntasSerializer(preguntas, many=True)
+        return  Response(serializer.data)
+
+
+    def post(self, request):
+        serializer = PreguntasSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create(validated_data=serializer.data)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            {
+                "error": True,
+                "error_msg": serializer.error_messages,
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
 class CuestionariosView(APIView):
     permission_classes = [IsAuthenticated]

@@ -31,8 +31,8 @@ class RespuestasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Respuestas
         fields = (
-            'cuestionario',
-            'pregunta'
+            'pregunta',
+            'respuesta'
         )
 
 
