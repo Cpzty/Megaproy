@@ -69,6 +69,11 @@ class PreguntasView(APIView):
 class CuestionariosView(APIView):
     permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        cuestionarios = Cuestionarios.objects.filter(titulo=request.titulo)
+        serializer = CuestionariosSerializer(cuestionarios, many=True)
+        return  Response(serializer.data)
+
     def post(self, request):
         serializer = CuestionariosSerializer(data=request.data)
         if serializer.is_valid(raise_exception=ValueError):
