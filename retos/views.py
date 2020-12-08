@@ -46,7 +46,7 @@ class CuestionariosView(APIView):
 
     def get(self, request):
         titulos = Cuestionarios.objects.filter(titulo=request.titulo)
-        serializer = CuestionarioSerializer(titulos, many=True)
+        serializer = CuestionariosSerializer(titulos, many=True)
         return Response(serializer.data)
 
     def post(self, request):
