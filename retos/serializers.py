@@ -20,7 +20,7 @@ class PreguntasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Preguntas
         fields = (
-            'titulo',
+            'cuestionario',
             'pregunta'
         )
 
