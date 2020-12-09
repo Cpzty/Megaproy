@@ -81,10 +81,7 @@ class PreguntasView(APIView):
         for i in range(preguntas.count()):
             dynamyc_preguntas['r'+str(i+1)] = preguntas[0].pregunta
 
-        data = json.dumps(dynamyc_preguntas)
-        #data = {
-         #   'pregunta': preguntas[0].pregunta,
-        #}
+        data = dynamyc_preguntas
         return  JsonResponse(data)
 
 
