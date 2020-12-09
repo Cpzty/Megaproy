@@ -45,13 +45,15 @@ class PreguntasView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        preguntas =  Preguntas.objects.filter(cuestionario=request.cuestionario)
+        cuestionarios = Cuestionarios.objects.filter(titulo=request.POST.get('titulo', 'default'))
+        preguntas =  Preguntas.objects.filter(cuestionario=cuestionarios)
         serializer = PreguntasSerializer(preguntas, many=True)
         return  Response(serializer.data)
 
 
     def post(self, request):
-        serializer = PreguntasSerializer(data=request.data)
+        cuestionarios = Cuestionarios.objects.filter(titulo=request.POST.get('titulo', 'default'))
+        serializer = PreguntasSerializer(cuestionario = cuestionarios, data=request.data)
         if serializer.is_valid(raise_exception=ValueError):
             serializer.create(validated_data=serializer.data)
             return Response(
