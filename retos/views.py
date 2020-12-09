@@ -82,6 +82,7 @@ class RespuestasView(APIView):
             pregunta = objec
         respuesta = answer
         data = {
+            'user': request.user,
             'pregunta': pregunta,
             'respuesta': respuesta
         }
