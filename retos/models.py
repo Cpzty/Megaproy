@@ -13,7 +13,7 @@ class Cuestionarios(models.Model):
 
 class Preguntas(models.Model):
     cuestionario = models.ManyToManyField(Cuestionarios, blank=False)
-    pregunta = models.CharField(max_length=75, blank=False)
+    pregunta = models.CharField(max_length=150, blank=False)
 
 
 class Respuestas(models.Model):
