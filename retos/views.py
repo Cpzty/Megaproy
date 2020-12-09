@@ -66,6 +66,18 @@ class Insignias_usuarioView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+    def get(self, request):
+        pass
+
+    def delete(self, request):
+        id_insignia = request.POST.get('id_insignia', 'default')
+        insignia = Insignias_usuario.objects.filter(id=id_insignia)
+        for objec in insignia:
+            objec.delete()
+        data = {'remover': 'ok'}
+        return JsonResponse(data)
+
+
 class InsigniasView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
