@@ -15,7 +15,8 @@ class CuestionariosSerializer(serializers.ModelSerializer):
 
 class PreguntasSerializer(serializers.ModelSerializer):
     def create(self, validated_data, cuestionario):
-        pregunta = Preguntas.objects.create(cuestionario=cuestionario, **validated_data)
+        pregunta = Preguntas.objects.create(**validated_data)
+        pregunta.cuestionario.set(cuestionario)
         return pregunta
     class Meta:
         model = Preguntas
