@@ -76,25 +76,14 @@ class RespuestasView(APIView):
         title  = request.POST.get('cuestionario', 'default')
         identifier = request.POST.get('pregunta', 'default')
         answer = request.POST.get('respuesta', 'default')
-        cuestionarios = Cuestionarios.objects.filter(titulo=title)
         preguntas = Preguntas.objects.filter(id=identifier)
         for objec in preguntas:
             pregunta = objec
-        respuesta = answer
-        data = {
-            'id': 0,
-            'pregunta_id': pregunta.id,
-            'respuesta': respuesta,
-            'user': request.user
-
-        }
-        serializer = RespuestasSerializer(data=data)
-        if serializer.is_valid(raise_exception=ValueError):
-            serializer.create(validated_data=serializer.data)
-            return Response(
-                serializer.data,
-                status=status.HTTP_201_CREATED
-            )
+        respuesta = Respuestas.objects.create(user=request.user, pregunta=pregunta, respuesta=answer)
+        return Response(
+            respuesta.data,
+            status=status.HTTP_201_CREATED
+        )
         return Response(
             {
                 "error": True,
@@ -102,7 +91,6 @@ class RespuestasView(APIView):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
-
 
 
 class PreguntasView(APIView):

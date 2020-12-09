@@ -67,7 +67,6 @@ class RespuestasSerializer(serializers.ModelSerializer):
         )
 
         extra_kwargs = {
-            'cuestionario': {'write_only': True, 'required': True},
             'pregunta': {'required': True}
                         }
 
