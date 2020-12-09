@@ -13,7 +13,7 @@ from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created
 from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
+from django.http import JsonResponse
 
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
@@ -128,8 +128,11 @@ class HistorialEmocionesView(APIView):
 
         elif emocion == 'triste':
             H1= Historial_emociones.objects.filter(user=request.user, emocion_inicial=emocion).count()
-            cantidad_tristeza = str(H1)
-            return HttpResponse(cantidad_tristeza)
+            data = {
+                'emocion': 'tristeza',
+                'count': H1
+            }
+            return JsonResponse(data)
 
     def post(self, request):
         serializer = Historial_emocionesSerializer(data=request.data)
