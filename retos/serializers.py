@@ -50,7 +50,11 @@ class PreguntasSerializer(serializers.ModelSerializer):
             'pregunta',
         )
 
-        extra_kwargs = {'titulo': {'write_only': True, 'required': True}}
+        extra_kwargs = {
+            'titulo': {'write_only': True, 'required': True},
+            'id_pregunta': {'write_only': True, 'required': False},
+            'modificar_pregunta': {'write_only': True, 'required': False}
+        }
 
 class RespuestasSerializer(serializers.ModelSerializer):
     def create(self, validated_data):

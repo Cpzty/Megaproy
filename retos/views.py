@@ -94,7 +94,7 @@ class PreguntasView(APIView):
             objec.save()
 
         data = {'status': 'OK'}
-        
+
         return JsonResponse(data)
 
 
