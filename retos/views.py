@@ -142,7 +142,7 @@ class RespuestasView(APIView):
         for i in range(len(ids_respuestas)):
             respuestas2 = Respuestas.objects.get(id=ids_respuestas[i]).pregunta.all()
             if respuestas2[0].id in ids_preguntas2:
-                dynamyc_respuestas['r' + str(contador)] = respuestas[ids_respuestas[i]].respuesta
+                dynamyc_respuestas['r' + str(contador)] = respuestas[i].respuesta
                 contador+= 1
 
 
