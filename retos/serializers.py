@@ -63,7 +63,7 @@ class RespuestasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Respuestas
         fields = (
-            'respuesta'
+            'respuesta',
         )
 
         extra_kwargs = {
