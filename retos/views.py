@@ -146,6 +146,8 @@ class HistorialEmocionesView(APIView):
                 'triste': E3,
                 'enojado': E4
             }
+            return JsonResponse(data)
+
 
     def post(self, request):
         serializer = Historial_emocionesSerializer(data=request.data)
