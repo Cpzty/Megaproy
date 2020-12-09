@@ -63,9 +63,13 @@ class RespuestasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Respuestas
         fields = (
-            'pregunta',
             'respuesta'
         )
+
+        extra_kwargs = {
+            'cuestionario': {'write_only': True, 'required': True},
+            'pregunta': {'write_only': True, 'required': True}
+                        }
 
 
 class RetoSerializer(serializers.ModelSerializer):

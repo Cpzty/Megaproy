@@ -67,6 +67,39 @@ class InsigniasView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+class RespuestasView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        title  = request.POST.get('cuestionario', 'default')
+        identifier = request.POST.get('pregunta', 'default')
+        answer = request.POST.get('respuesta', 'default')
+        cuestionarios = Cuestionarios.objects.filter(titulo=title)
+        preguntas = Preguntas.objects.filter(id=identifier)
+        respuesta = answer
+        data = {
+            'pregunta': preguntas[0],
+            'respuesta': respuesta
+        }
+        serializer = PreguntasSerializer(data=data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create(cuestionario=cuestionarios, validated_data=serializer.data)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            {
+                "error": True,
+                "error_msg": serializer.error_messages,
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+
 class PreguntasView(APIView):
     permission_classes = [IsAuthenticated]
 
