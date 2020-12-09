@@ -71,7 +71,14 @@ class InsigniasView(APIView):
 class RespuestasView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
-        pass
+        id_usuario = = request.POST.get('id_respuesta', 'default')
+        respuestas = Respuestas.objects.filter(user_id=id_usuario)
+        dynamyc_respuestas = {}
+        for i in range(respuestas.count()):
+            dynamyc_respuestas['r' + str(i + 1)] = respuestas[i].respuesta
+
+        data = dynamyc_respuestas
+        return JsonResponse(data)
 
     def delete(self, request):
         id_respuesta = request.POST.get('id_respuesta', 'default')
@@ -114,7 +121,7 @@ class PreguntasView(APIView):
         #serializer = PreguntasSerializer(preguntas, many=True)
         dynamyc_preguntas = {}
         for i in range(preguntas.count()):
-            dynamyc_preguntas['r'+str(i+1)] = preguntas[i].pregunta
+            dynamyc_preguntas['p'+str(i+1)] = preguntas[i].pregunta
 
         data = dynamyc_preguntas
         return  JsonResponse(data)
