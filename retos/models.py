@@ -289,6 +289,7 @@ class Profile(models.Model):
     racha = models.IntegerField(default=0)
     #puntaje
     puntos = models.IntegerField(default=0)
+    cantidad_retos_realizados = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.user)
