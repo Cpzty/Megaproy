@@ -126,8 +126,8 @@ class HistorialEmocionesView(APIView):
             serializer = Historial_emocionesSerializer(users, many=True)
             return  Response(serializer.data)
 
-        elif emocion == 'tristeza':
-            H1= Historial_emociones.objects.filter(user=request.user, emocion_inicial=emocion).count
+        elif emocion == 'triste':
+            H1= Historial_emociones.objects.filter(user=request.user, emocion_inicial=emocion).count()
             cantidad_tristeza = str(H1)
             return HttpResponse(cantidad_tristeza)
 
