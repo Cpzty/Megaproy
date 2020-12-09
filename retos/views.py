@@ -67,15 +67,16 @@ class Insignias_usuarioView(APIView):
         )
 
     def get(self, request):
-        insignias = Insignias_usuario.objects.filter(user=request.user)
-        titulos = {}
-        current =0
+        id_insignia = request.POST.get('id_insignia', 'default')
+        insignias = Insignias.objects.get(id= id_insignia).insignias_usuario.all()
+
+        usuarios = {}
+        current = 1
         for objec in insignias:
-            titulos['t' + str(current)] = objec.titulo
-            titulos['d' + str(current)] = objec.descripcion
-            current += 1
-            
-        return JsonResponse(titulos)
+          usuarios['user' + str(current)] = objec.user
+          current += 1
+
+        return JsonResponse(usuarios)
 
     def delete(self, request):
         id_insignia = request.POST.get('id_insignia', 'default')
