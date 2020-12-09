@@ -16,6 +16,7 @@ class Insignias_usuarioSerializer(serializers.ModelSerializer):
 
         extra_kwargs = {
             'titulo_insignia': {'write_only': True, 'required': False},
+            'titulo_cuestionario': {'write_only': True, 'required': False},
             'id_insignia': {'write_only': True, 'required': False},
         }
 
@@ -74,7 +75,9 @@ class RespuestasSerializer(serializers.ModelSerializer):
             'pregunta': {'required': True},
             'id_respuesta': {'write_only': True, 'required': False},
             'modificar_respuesta': {'write_only': True, 'required': False},
-                        }
+            'titulo_cuestionario': {'write_only': True, 'required': False},
+
+        }
 
 
 class RetoSerializer(serializers.ModelSerializer):

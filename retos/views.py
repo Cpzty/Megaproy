@@ -116,10 +116,35 @@ class InsigniasView(APIView):
 class RespuestasView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
+        #paso 1 obtener todas las preguntas de usuario
+        #paso 2 obtener preguntas de un cuestionario
+        title = request.POST.get('titulo_cuestionario', 'default')
+        cuestionarios = Cuestionarios.objects.filter(titulo=title)
+        preguntas = Preguntas.objects.all()
+        ids_preguntas = []
+        for i in range(preguntas.count()):
+            ids_preguntas.append(preguntas[i].id)
+
+        ids_preguntas2 = []
+        for i in range(len(ids_preguntas)):
+            preguntas2 = Preguntas.objects.get(id=ids_preguntas[i]).cuestionario.all()
+            if preguntas2[0].id == cuestionarios[0].id:
+                ids_preguntas2.append(preguntas[i].id)
+
+        #paso 3 obtener todas las respuestas de un usuario
         respuestas = Respuestas.objects.filter(user=request.user)
-        dynamyc_respuestas = {}
+        ids_respuestas = []
         for i in range(respuestas.count()):
-            dynamyc_respuestas['r' + str(i + 1)] = respuestas[i].respuesta
+            ids_respuestas.append(respuestas[i].id)
+
+        dynamyc_respuestas = {}
+        contador = 1
+        for i in range(len(ids_respuestas)):
+            respuestas2 = Respuestas.objects.get(id=ids_respuestas[i]).pregunta.all()
+            if respuestas2[0].id in ids_preguntas2:
+                dynamyc_respuestas['r' + str(contador)] = respuestas[ids_respuestas[i]].respuesta
+                contador+= 1
+
 
         data = dynamyc_respuestas
         return JsonResponse(data)
