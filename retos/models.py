@@ -8,6 +8,16 @@ from django.core.exceptions import ValidationError
 
 import datetime
 
+class Insignias(models.Model):
+    titulo = models.CharField(max_length=75, blank=False)
+    descripcion = models.CharField(max_length=150, blank=False)
+
+class Insignias_usuario(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    insignia_obtenida  = models.ForeignKey(Insignias, on_delete=models.CASCADE, default=None)
+    fecha_registrada = models.DateTimeField(default=datetime.date.today)
+
+
 class Cuestionarios(models.Model):
     titulo = models.CharField(max_length=75, blank=False)
 
