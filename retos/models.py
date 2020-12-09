@@ -27,7 +27,7 @@ class Preguntas(models.Model):
 
 class Respuestas(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    pregunta = models.ForeignKey(Preguntas, on_delete=models.CASCADE, default=None)
+    pregunta = models.ManyToManyField(Preguntas, blank=False)
     respuesta = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
 
 
