@@ -14,7 +14,10 @@ class Insignias_usuarioSerializer(serializers.ModelSerializer):
             'fecha_registrada',
         )
 
-        extra_kwargs = {'titulo_insignia': {'write_only': True, 'required': True}}
+        extra_kwargs = {
+            'titulo_insignia': {'write_only': True, 'required': False},
+            'id_insignia': {'write_only': True, 'required': False},
+        }
 
 
 class InsigniasSerializer(serializers.ModelSerializer):
