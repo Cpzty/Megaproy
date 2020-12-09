@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer, Cuestionario_NOSerializer, Cuestionario_NORSerializer, Cuestionario_ComunicacionSerializer, Cuestionario_ComunicacionRSerializer, Historial_emocionesSerializer, CuestionariosSerializer, PreguntasSerializer, InsigniasSerializer, Insignias_usuarioSerializer
+from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer, Cuestionario_NOSerializer, Cuestionario_NORSerializer, Cuestionario_ComunicacionSerializer, Cuestionario_ComunicacionRSerializer, Historial_emocionesSerializer, CuestionariosSerializer, PreguntasSerializer, InsigniasSerializer, Insignias_usuarioSerializer, RespuestasSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -86,9 +86,9 @@ class RespuestasView(APIView):
             'pregunta': pregunta,
             'respuesta': respuesta
         }
-        serializer = PreguntasSerializer(data=data)
+        serializer = RespuestasSerializer(data=data)
         if serializer.is_valid(raise_exception=ValueError):
-            serializer.create(cuestionario=cuestionarios, validated_data=serializer.data)
+            serializer.create(validated_data=serializer.data)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
