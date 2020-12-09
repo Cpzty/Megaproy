@@ -73,7 +73,7 @@ class Insignias_usuarioView(APIView):
         data = {}
         contador = 0
         for i in range(insignias_count):
-            insignias2 = Insignias_usuario.objects.get(id= insignias[i].id)[0].insignia_obtenida_set.all()
+            insignias2 = Insignias_usuario.objects.get(id= insignias[i].id).insignia_obtenida.all()
             data['t' + str(contador+1)] = insignias2[0].titulo
             data['d' + str(contador+1)] = insignias2[0].descripcion
             data['fecha' + str(contador+1)] = insignias[i].fecha_registrada
