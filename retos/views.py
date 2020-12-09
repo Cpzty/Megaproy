@@ -71,14 +71,24 @@ class InsigniasView(APIView):
 class RespuestasView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
-        id_usuario = = request.POST.get('id_respuesta', 'default')
-        respuestas = Respuestas.objects.filter(user_id=id_usuario)
+        respuestas = Respuestas.objects.filter(user=request.user)
         dynamyc_respuestas = {}
         for i in range(respuestas.count()):
             dynamyc_respuestas['r' + str(i + 1)] = respuestas[i].respuesta
 
         data = dynamyc_respuestas
         return JsonResponse(data)
+
+    def put(self, request):
+        id_respuesta = request.POST.get('id_respuesta', 'default')
+        respuestas = Respuestas.objects.filter(id=id_respuesta)
+        for objec in respuestas:
+            objec.respuesta = request.POST.get('modificar_respuesta', '')
+            objec.save()
+        data = {'status': 'OK'}
+
+        return JsonResponse(data)
+
 
     def delete(self, request):
         id_respuesta = request.POST.get('id_respuesta', 'default')
