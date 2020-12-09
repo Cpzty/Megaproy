@@ -84,6 +84,19 @@ class PreguntasView(APIView):
         data = dynamyc_preguntas
         return  JsonResponse(data)
 
+    def put(self, request):
+        title = request.POST.get('titulo', 'default')
+        id_pregunta = request.POST.get('id_pregunta', 'default')
+        cuestionarios = Cuestionarios.objects.filter(titulo=title)
+        preguntas = Preguntas.objects.filter(cuestionario__id=cuestionarios[0].id, id=id_pregunta)
+        for objec in preguntas:
+            objec.pregunta = request.POST.get('modificar_pregunta', '')
+            objec.save()
+
+        data = {'status': 'OK'}
+        
+        return JsonResponse(data)
+
 
     def post(self, request):
         cuestionarios = Cuestionarios.objects.filter(titulo=request.POST.get('titulo', 'default'))
@@ -101,6 +114,7 @@ class PreguntasView(APIView):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
+
 
 class CuestionariosView(APIView):
     permission_classes = [IsAuthenticated]
