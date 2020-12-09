@@ -73,6 +73,14 @@ class RespuestasView(APIView):
     def get(self, request):
         pass
 
+    def delete(self, request):
+        id_respuesta = request.POST.get('id_respuesta', 'default')
+        respuestas = Respuestas.objects.filter(id=id_respuesta)
+        for objec in respuestas:
+            objec.delete()
+        data = {'remover': 'ok'}
+        return JsonResponse(data)
+
     def post(self, request):
         identifier = request.POST.get('pregunta', 'default')
         preguntas = Preguntas.objects.filter(id=identifier)
