@@ -80,7 +80,11 @@ class RespuestasView(APIView):
         for objec in preguntas:
             pregunta = objec
         respuesta = Respuestas.objects.create(user=request.user, pregunta=pregunta, respuesta=answer)
-        data = serializers.serialize('json', respuesta[0])
+        #data = serializers.serialize('json', respuesta.values())
+        JsonSerializer = serializers.get_serializer('json')
+        json_serializer = JsonSerializer()
+        json_serializer.serialize(respuesta)
+        data = json_serializer.getvalue()
         return Response(
             data,
             status=status.HTTP_201_CREATED
