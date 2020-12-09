@@ -68,7 +68,7 @@ class Insignias_usuarioView(APIView):
 
     def get(self, request):
         id_insignia = request.POST.get('id_insignia', 'default')
-        insignias = Insignias.objects.get(id= id_insignia).insignias_usuario.all()
+        insignias = Insignias_usuario.objects.get(id= id_insignia).insignias_usuario_set.all()
         insignias2 = Insignias.objects.objects.filter(id= id_insignia)
         ins_usuarios = {}
         current = 1
