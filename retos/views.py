@@ -69,13 +69,15 @@ class Insignias_usuarioView(APIView):
     def get(self, request):
         #id_insignia = request.POST.get('id_insignia', 'default')
         insignias = Insignias_usuario.objects.all().filter(user=request.user)
+        insignias_count = insignias.count()
         data = {}
-        contador = 1
-        for objec in insignias:
-            insignias2 = Insignias_usuario.objects.get(id= objec.id)[0].insignia_obtenida_set.all()
-            data['t' + str(contador)] = insignias2[0].titulo
-            data['d' + str(contador)] = insignias2[0].descripcion
-            data['fecha' + str(contador)] = objec.fecha_registrada
+        contador = 0
+        for i in range(insignias_count):
+            insignias2 = Insignias_usuario.objects.get(id= insignias[i].id)[0].insignia_obtenida_set.all()
+            data['t' + str(contador+1)] = insignias2[0].titulo
+            data['d' + str(contador+1)] = insignias2[0].descripcion
+            data['fecha' + str(contador+1)] = insignias[i].fecha_registrada
+            contador += 1
 
         return JsonResponse(data)
 
