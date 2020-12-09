@@ -77,7 +77,7 @@ class PreguntasView(APIView):
         preguntas =  Preguntas.objects.filter(cuestionario__id=cuestionarios[0].id)
         #serializer = PreguntasSerializer(preguntas, many=True)
         data = {
-            'pregunta': preguntas,
+            'pregunta': preguntas[0].pregunta,
         }
         return  JsonResponse(data)
 
