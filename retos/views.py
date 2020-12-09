@@ -78,9 +78,11 @@ class RespuestasView(APIView):
         answer = request.POST.get('respuesta', 'default')
         cuestionarios = Cuestionarios.objects.filter(titulo=title)
         preguntas = Preguntas.objects.filter(id=identifier)
+        for objec in preguntas:
+            pregunta = objec
         respuesta = answer
         data = {
-            'pregunta': preguntas[0],
+            'pregunta': pregunta,
             'respuesta': respuesta
         }
         serializer = PreguntasSerializer(data=data)
