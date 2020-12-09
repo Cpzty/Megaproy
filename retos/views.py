@@ -14,6 +14,7 @@ from django_rest_passwordreset.signals import reset_password_token_created
 from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from django.core import serializers
 import json
 
 @receiver(reset_password_token_created)
@@ -73,15 +74,15 @@ class RespuestasView(APIView):
         pass
 
     def post(self, request):
-        title  = request.POST.get('cuestionario', 'default')
         identifier = request.POST.get('pregunta', 'default')
         answer = request.POST.get('respuesta', 'default')
         preguntas = Preguntas.objects.filter(id=identifier)
         for objec in preguntas:
             pregunta = objec
         respuesta = Respuestas.objects.create(user=request.user, pregunta=pregunta, respuesta=answer)
+        data = serializers.serialize('json', respuesta)
         return Response(
-            respuesta.data,
+            data,
             status=status.HTTP_201_CREATED
         )
         return Response(
