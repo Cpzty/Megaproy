@@ -4,9 +4,9 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 class Insignias_usuarioSerializer(serializers.ModelSerializer):
-    def create(self, validated_data, insignia):
-        insignia_obtenida = Insignias.objects.filter(titulo=insignia)
-        insignia_usuario = Insignias_usuario.objects.create(insignia_obtenida, **validated_data)
+    def create(self, validated_data, user, insignia_obtenida):
+        insignia_usuario = Insignias_usuario.objects.create(user=user, **validated_data)
+        insignia_usuario.cuestionario.set(insignia_obtenida)
         return insignia_usuario
     class Meta:
         model = Insignias_usuario

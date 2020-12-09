@@ -45,6 +45,27 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     #msg.attach_alternative(email_html_message, "text/html")
     msg.send()
 
+class Insignias_usuario(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        identifier = request.POST.get('titulo_insignia', 'default')
+        insignia = Insignias.objects.filter(titulo=identifier)
+        serializer = Insignias_usuarioSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create(user=request.user, insignia_obtenida=insignia, validated_data=serializer.data)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED
+        )
+        return Response(
+            {
+                "error": True,
+                "error_msg": serializer.error_messages,
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
 class InsigniasView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):

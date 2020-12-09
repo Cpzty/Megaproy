@@ -13,7 +13,7 @@ class Insignias(models.Model):
 
 class Insignias_usuario(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    insignia_obtenida  = models.ForeignKey(Insignias, on_delete=models.CASCADE, default=None)
+    insignia_obtenida  = models.ManyToManyField(Insignias, blank=False)
     fecha_registrada = models.DateTimeField(default=datetime.date.today)
 
 
