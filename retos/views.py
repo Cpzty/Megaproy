@@ -53,9 +53,9 @@ class PreguntasView(APIView):
 
     def post(self, request):
         cuestionarios = Cuestionarios.objects.filter(titulo=request.POST.get('titulo', 'default'))
-        serializer = PreguntasSerializer(cuestionario = cuestionarios, data=request.data)
+        serializer = PreguntasSerializer(data=request.data)
         if serializer.is_valid(raise_exception=ValueError):
-            serializer.create(validated_data=serializer.data)
+            serializer.create(cuestionario = cuestionarios,validated_data=serializer.data)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
