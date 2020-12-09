@@ -70,10 +70,16 @@ class PreguntasView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        cuestionarios = Cuestionarios.objects.filter(id=request.POST.get('cuestionario', 'default'))
+
+        title = request.POST.get('titulo', 'default')
+
+        cuestionarios = Cuestionarios.objects.filter(titulo=title)
         preguntas =  Preguntas.objects.filter(cuestionario=cuestionarios)
-        serializer = PreguntasSerializer(preguntas, many=True)
-        return  Response(serializer.data)
+        #serializer = PreguntasSerializer(preguntas, many=True)
+        data = {
+            'pregunta': preguntas[0],
+        }
+        return  JsonResponse(data)
 
 
     def post(self, request):
