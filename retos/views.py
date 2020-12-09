@@ -13,6 +13,8 @@ from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created
 from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
 
@@ -118,9 +120,16 @@ class CuestionariosView(APIView):
 class HistorialEmocionesView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
-        users =  Historial_emociones.objects.filter(user=request.user, fecha_registrada=request.fecha_registrada)
-        serializer = Historial_emocionesSerializer(users, many=True)
-        return  Response(serializer.data)
+        emocion = request.POST.get('conteo_emociones', 'default')
+        if emocion == 'default':
+            users =  Historial_emociones.objects.filter(user=request.user, fecha_registrada=request.fecha_registrada)
+            serializer = Historial_emocionesSerializer(users, many=True)
+            return  Response(serializer.data)
+
+        elif emocion == 'tristeza':
+            H1= Historial_emociones.objects.filter(user=request.user, emocion_inicial=emocion).count
+            cantidad_tristeza = str(H1)
+            return HttpResponse(cantidad_tristeza)
 
     def post(self, request):
         serializer = Historial_emocionesSerializer(data=request.data)

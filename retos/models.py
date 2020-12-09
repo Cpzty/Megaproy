@@ -4,7 +4,6 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.core.exceptions import ValidationError
 
 import datetime
 

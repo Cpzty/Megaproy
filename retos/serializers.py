@@ -89,6 +89,10 @@ class Historial_emocionesSerializer(serializers.ModelSerializer):
             'fecha_registrada'
         )
 
+        extra_kwargs = {'conteo_emociones': {'write_only': True, 'required': False}}
+
+
+
 class Cuestionario_ComunicacionSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         cuestionario = Cuestionario_comunicacion_efectiva.objects.create(**validated_data)
