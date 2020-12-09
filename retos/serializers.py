@@ -20,9 +20,10 @@ class PreguntasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Preguntas
         fields = (
-            'cuestionario',
-            'pregunta'
+            'pregunta',
         )
+
+        extra_kwargs = {'titulo': {'write_only': True, 'required': True}}
 
 class RespuestasSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
