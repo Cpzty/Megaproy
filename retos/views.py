@@ -84,6 +84,14 @@ class PreguntasView(APIView):
         data = dynamyc_preguntas
         return  JsonResponse(data)
 
+    def delete(self, request):
+        title = request.POST.get('titulo', 'default')
+        id_pregunta = request.POST.get('id_pregunta', 'default')
+        cuestionarios = Cuestionarios.objects.filter(titulo=title)
+        preguntas = Preguntas.objects.filter(cuestionario__id=cuestionarios[0].id, id=id_pregunta)
+        for objec in preguntas:
+            objec.delete()
+
     def put(self, request):
         title = request.POST.get('titulo', 'default')
         id_pregunta = request.POST.get('id_pregunta', 'default')
