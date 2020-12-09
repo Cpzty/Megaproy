@@ -74,7 +74,7 @@ class RespuestasView(APIView):
 
     def post(self, request):
         title  = request.POST.get('cuestionario', 'default')
-        identifier = int(request.POST.get('pregunta', 'default'))
+        identifier = request.POST.get('pregunta', 'default')
         answer = request.POST.get('respuesta', 'default')
         cuestionarios = Cuestionarios.objects.filter(titulo=title)
         preguntas = Preguntas.objects.filter(id=identifier)
