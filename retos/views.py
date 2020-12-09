@@ -126,13 +126,26 @@ class HistorialEmocionesView(APIView):
             serializer = Historial_emocionesSerializer(users, many=True)
             return  Response(serializer.data)
 
-        elif emocion == 'triste':
+        elif emocion != 'todas':
             H1= Historial_emociones.objects.filter(user=request.user, emocion_inicial=emocion).count()
             data = {
-                'emocion': 'tristeza',
+                'emocion': emocion,
                 'count': H1
             }
             return JsonResponse(data)
+
+        else:
+            E1 = Historial_emociones.objects.filter(user=request.user, emocion_inicial='alegre').count()
+            E2 = Historial_emociones.objects.filter(user=request.user, emocion_inicial='caraX').count()
+            E3 = Historial_emociones.objects.filter(user=request.user, emocion_inicial='triste').count()
+            E4 = Historial_emociones.objects.filter(user=request.user, emocion_inicial='enojado').count()
+
+            data = {
+                'alegre': E1,
+                'X': E2,
+                'triste': E3,
+                'enojado': E4
+            }
 
     def post(self, request):
         serializer = Historial_emocionesSerializer(data=request.data)
