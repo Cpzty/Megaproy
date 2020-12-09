@@ -1,7 +1,33 @@
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas, Insignias, Insignias_usuario
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
+
+class Insignias_usuarioSerializer(serializers.ModelSerializer):
+    def create(self, validated_data, insignia):
+        insignia_obtenida = Insignias.objects.filter(titulo=insignia)
+        insignia_usuario = Insignias_usuario.objects.create(insignia_obtenida, **validated_data)
+        return insignia_usuario
+    class Meta:
+        model = Insignias_usuario
+        fields = (
+            'fecha_registrada',
+        )
+
+        extra_kwargs = {'titulo_insignia': {'write_only': True, 'required': True}}
+
+
+class InsigniasSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        insignia = Insignias.objects.create(**validated_data)
+        return insignia
+    class Meta:
+        model = Insignias
+        fields = (
+            'titulo',
+            'descripcion',
+        )
+
 
 class CuestionariosSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
