@@ -82,9 +82,11 @@ class RespuestasView(APIView):
             pregunta = objec
         respuesta = answer
         data = {
-            'user': request.user,
-            'pregunta': pregunta,
-            'respuesta': respuesta
+            'id': 0,
+            'pregunta_id': pregunta.id,
+            'respuesta': respuesta,
+            'user': request.user
+
         }
         serializer = RespuestasSerializer(data=data)
         if serializer.is_valid(raise_exception=ValueError):
