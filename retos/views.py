@@ -79,7 +79,7 @@ class RespuestasView(APIView):
         #data = serializers.serialize('json', respuesta.values())
         serializer = RespuestasSerializer(data=request.data)
         if serializer.is_valid(raise_exception=ValueError):
-            serializer.create(pregunta=preguntas, validated_data=serializer.data)
+            serializer.create(user=request.user, pregunta=preguntas, validated_data=serializer.data)
 
         return Response(
             serializer.data,

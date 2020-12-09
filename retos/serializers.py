@@ -57,8 +57,8 @@ class PreguntasSerializer(serializers.ModelSerializer):
         }
 
 class RespuestasSerializer(serializers.ModelSerializer):
-    def create(self, validated_data, pregunta):
-        respuesta = Respuestas.objects.create(**validated_data)
+    def create(self, validated_data, user, pregunta):
+        respuesta = Respuestas.objects.create(user=user, **validated_data)
         respuesta.pregunta.set(pregunta)
         return respuesta
     class Meta:
