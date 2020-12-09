@@ -79,7 +79,7 @@ class PreguntasView(APIView):
         #serializer = PreguntasSerializer(preguntas, many=True)
         dynamyc_preguntas = {}
         for i in range(preguntas.count()):
-            dynamyc_preguntas['r'+str(i+1)] = preguntas[0].pregunta
+            dynamyc_preguntas['r'+str(i+1)] = preguntas[i].pregunta
 
         data = dynamyc_preguntas
         return  JsonResponse(data)
