@@ -71,6 +71,8 @@ class ComentariosView(APIView):
             data['titulo' + str(i)] = comentarios[i].titulo
             data['comentario' + str(i)] = comentarios[i].descripcion
 
+        return JsonResponse(data)
+
 class Insignias_usuarioView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
