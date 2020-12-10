@@ -812,13 +812,18 @@ class ProfileRecordView(APIView):
             data['puntos'] = profile[0].puntos
 
         elif ranks == 'puntos':
-            user_ids = []
-            #get all users
-            users = User.objects.all()
-            for user in users:
-                user_ids.append(user.id)
+            profiles = Profile.objects.all().order_by('-puntos')
+            profile_ids = []
+            for user in profiles:
+                profile_ids.append(user.id)
+            usernames = []
+            for i in range(profiles.count()):
+                usernames.append(User.objects.get(id=profile_ids[i]).username)
 
-            data['decoy'] = user_ids[-1]
+            #data
+            for i in range(profiles.count()):
+                data['user' + str(i)] = usernames[i]
+                data['puntos' + str(i)] = profiles[i].puntos
 
         return JsonResponse(data)
 
