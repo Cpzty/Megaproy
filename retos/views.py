@@ -804,9 +804,23 @@ class ProfileRecordView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        users = Profile.objects.filter(user=request.user)
-        serializer = ProfileSerializer(users, many=True)
-        return Response(serializer.data)
+        profile = Profile.objects.filter(user=request.user)
+        data = {}
+        ranks = request.POST.get('ranking', 'default')
+        if ranks == 'default':
+            data['racha'] = profile[0].racha
+            data['puntos'] = profile[0].puntos
+
+        elif ranks == 'puntos':
+            user_ids = []
+            #get all users
+            users = User.objects.all()
+            for user in users:
+                user_ids.append(user.id)
+
+            data['decoy'] = user_ids[-1]
+
+        return JsonResponse(data)
 
     def put(self, request):
         users = Profile.objects.filter(user=request.user)

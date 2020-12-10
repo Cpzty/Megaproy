@@ -7,6 +7,11 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 import datetime
 
+class Comentarios(models.Model):
+    titulo = models.CharField(max_length=75, blank=False)
+    descripcion = models.CharField(max_length=300, blank=False)
+
+
 class Insignias(models.Model):
     titulo = models.CharField(max_length=75, blank=False)
     descripcion = models.CharField(max_length=150, blank=False)

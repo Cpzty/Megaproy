@@ -318,6 +318,8 @@ class UserSerializer(serializers.ModelSerializer):
             )
         ]
 
+        extra_kwargs = {'ranking': {'write_only': True, 'required': False}}
+
 
 class CuestionarioSerializer(serializers.ModelSerializer):
     class Meta:
