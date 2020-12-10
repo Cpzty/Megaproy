@@ -15,6 +15,9 @@ class ComentarioSerializer(serializers.ModelSerializer):
             'descripcion',
         )
 
+        extra_kwargs = {'all_comments': {'write_only': True, 'required': False}}
+
+
 class Insignias_usuarioSerializer(serializers.ModelSerializer):
     def create(self, validated_data, user, insignia_obtenida):
         insignia_usuario = Insignias_usuario.objects.create(user=user, **validated_data)

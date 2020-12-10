@@ -66,11 +66,19 @@ class ComentariosView(APIView):
 
     def get(self, request):
         data = {}
-        comentarios = Comentarios.objects.filter(user=request.user)
-        for i in range(comentarios.count()):
-            data['titulo' + str(i)] = comentarios[i].titulo
-            data['comentario' + str(i)] = comentarios[i].descripcion
+        all_comments = request.POST.get('all_comments', 'default')
+        if all_comments == 'default':
+            comentarios = Comentarios.objects.filter(user=request.user)
+            for i in range(comentarios.count()):
+                data['titulo' + str(i)] = comentarios[i].titulo
+                data['comentario' + str(i)] = comentarios[i].descripcion
 
+        else:
+            comentarios = Comentarios.objects.all()
+            for i in range(comentarios.count()):
+                data['titulo' + str(i)] = comentarios[i].titulo
+                data['comentario' + str(i)] = comentarios[i].descripcion
+                
         return JsonResponse(data)
 
 class Insignias_usuarioView(APIView):
