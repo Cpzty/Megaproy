@@ -850,6 +850,21 @@ class ProfileRecordView(APIView):
                 data['username' + str(i)] = username
                 data['retos' + str(i)] = cantidad_retos
 
+        elif ranks == 'racha':
+            profiles = Profile.objects.all().order_by('-racha')
+            profile_ids = []
+            for user in profiles:
+                profile_ids.append(user.user_id)
+            usernames = []
+            for i in range(profiles.count()):
+                usernames.append(User.objects.get(id=profile_ids[i]).username)
+
+            # data
+            for i in range(profiles.count()):
+                data['user' + str(i)] = usernames[i]
+                data['racha' + str(i)] = profiles[i].racha
+                # data['id' + str(i)] = profile_ids[i]
+
         return JsonResponse(data)
 
     def put(self, request):
