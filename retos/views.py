@@ -824,6 +824,7 @@ class ProfileRecordView(APIView):
             for i in range(profiles.count()):
                 data['user' + str(i)] = usernames[i]
                 data['puntos' + str(i)] = profiles[i].puntos
+                data['id' + str(i)] = profile_ids[i]
 
         return JsonResponse(data)
 
