@@ -23,12 +23,15 @@ class Cuestionarios(models.Model):
 class Preguntas(models.Model):
     cuestionario = models.ManyToManyField(Cuestionarios, blank=False)
     pregunta = models.CharField(max_length=150, blank=False)
+    fecha_creacion = models.DateTimeField(default=datetime.date.today)
+
 
 
 class Respuestas(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     pregunta = models.ManyToManyField(Preguntas, blank=False)
     respuesta = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    fecha_registrada = models.DateTimeField(default=datetime.date.today)
 
 
 class Cuestionario_comunicacion_realizado(models.Model):

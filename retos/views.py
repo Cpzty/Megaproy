@@ -323,9 +323,14 @@ class HistorialEmocionesView(APIView):
 class RetoRecordView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
-        retos = Reto_finalizado.objects.filter(user=request.user, fecha_registrada=request.fecha_registrada)
-        serializer = RetoSerializer(retos)
-        return Response(serializer.data)
+        retos = Reto_finalizado.objects.filter(user=request.user)
+        data = {}
+        contador = 0
+        for objec in retos:
+            data['n'+ str(contador+1)] = objec.name
+            data['r' + str(contador + 1)] = objec.respuesta
+            contador += 1
+        return JsonResponse(data)
 
     def post(self, request):
         serializer = RetoSerializer(data=request.data)
