@@ -327,9 +327,11 @@ class RetoRecordView(APIView):
         data = {}
         contador = 0
         for objec in retos:
-            data['n'+ str(contador+1)] = objec.name
-            data['r' + str(contador + 1)] = objec.respuesta
+            data['reto'+ str(contador+1)] = objec.name
+            data['respuesta' + str(contador + 1)] = objec.respuesta
             contador += 1
+        data['cantidad total'] = retos.count()
+
         return JsonResponse(data)
 
     def post(self, request):
