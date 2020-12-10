@@ -76,7 +76,7 @@ class ComentariosView(APIView):
         else:
             comentarios = Comentarios.objects.all()
             for i in range(comentarios.count()):
-                username = User.objects.get(user_id=comentarios[i].user_id).username
+                username = User.objects.get(id=comentarios[i].user_id).username
                 data['user' + str(i)] = username
                 data['titulo' + str(i)] = comentarios[i].titulo
                 data['comentario' + str(i)] = comentarios[i].descripcion
