@@ -815,7 +815,7 @@ class ProfileRecordView(APIView):
             profiles = Profile.objects.all().order_by('-puntos')
             profile_ids = []
             for user in profiles:
-                profile_ids.append(user.id)
+                profile_ids.append(user.user_id)
             usernames = []
             for i in range(profiles.count()):
                 usernames.append(User.objects.get(id=profile_ids[i]).username)
