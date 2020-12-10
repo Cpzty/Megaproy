@@ -8,6 +8,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
 class Comentarios(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     titulo = models.CharField(max_length=75, blank=False)
     descripcion = models.CharField(max_length=300, blank=False)
 

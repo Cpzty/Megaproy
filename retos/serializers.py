@@ -1,7 +1,19 @@
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas, Insignias, Insignias_usuario
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas, Insignias, Insignias_usuario, Comentarios
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
+
+class ComentarioSerializer(serializers.ModelSerializer):
+    def create(self, validated_data, user):
+        comentario = Comentarios.objects.create(user=user, **validated_data)
+        return comentario
+
+    class Meta:
+        model = Comentarios
+        fields = (
+            'titulo',
+            'descripcion',
+        )
 
 class Insignias_usuarioSerializer(serializers.ModelSerializer):
     def create(self, validated_data, user, insignia_obtenida):

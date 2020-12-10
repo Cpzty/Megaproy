@@ -1,10 +1,10 @@
-from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer, Cuestionario_NOSerializer, Cuestionario_NORSerializer, Cuestionario_ComunicacionSerializer, Cuestionario_ComunicacionRSerializer, Historial_emocionesSerializer, CuestionariosSerializer, PreguntasSerializer, InsigniasSerializer, Insignias_usuarioSerializer, RespuestasSerializer
+from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer, Cuestionario_NOSerializer, Cuestionario_NORSerializer, Cuestionario_ComunicacionSerializer, Cuestionario_ComunicacionRSerializer, Historial_emocionesSerializer, CuestionariosSerializer, PreguntasSerializer, InsigniasSerializer, Insignias_usuarioSerializer, RespuestasSerializer, ComentarioSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas, Insignias, Insignias_usuario
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas, Insignias, Insignias_usuario, Comentarios
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 #from django.template.loader import render_to_string
@@ -44,6 +44,32 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     )
     #msg.attach_alternative(email_html_message, "text/html")
     msg.send()
+
+class ComentariosView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        serializer = ComentarioSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create(user=request.user ,validated_data=serializer.data)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED
+        )
+        return Response(
+            {
+                "error": True,
+                "error_msg": serializer.error_messages,
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    def get(self, request):
+        data = {}
+        comentarios = Comentarios.objects.filter(user=request.user)
+        for i in range(comentarios.count()):
+            data['titulo' + str(i)] = comentarios[i].titulo
+            data['comentario' + str(i)] = comentarios[i].descripcion
 
 class Insignias_usuarioView(APIView):
     permission_classes = [IsAuthenticated]
