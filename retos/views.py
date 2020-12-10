@@ -824,7 +824,19 @@ class ProfileRecordView(APIView):
             for i in range(profiles.count()):
                 data['user' + str(i)] = usernames[i]
                 data['puntos' + str(i)] = profiles[i].puntos
-                data['id' + str(i)] = profile_ids[i]
+                #data['id' + str(i)] = profile_ids[i]
+
+        elif ranks == 'insignias':
+            ids_usuarios = []
+            usuarios_insignia = Insignias_usuario.objects.all()
+            for user in usuarios_insignia:
+                if user.user_id not in ids_usuarios:
+                    ids_usuarios.append(user.user_id)
+            for i in range(len(ids_usuarios)):
+                cantidad_insignias = Insignias_usuario.objects.filter(user_id=ids_usuarios[i]).count()
+                username = User.objects.get(id=ids_usuarios[i]).username
+                data['username' + str(i)] = username
+                data['insignias' + str(i)] = cantidad_insignias
 
         return JsonResponse(data)
 
