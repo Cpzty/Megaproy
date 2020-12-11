@@ -899,7 +899,7 @@ class ProfileRecordView(APIView):
                     conteo_puntos += puntos[j].puntos
                 count_usuario.append(conteo_puntos)
                 conteo_puntos = 0
-            sort_data2 = sorted(data2.items(), key=lambda x: x[0][1], reverse=True)
+            sort_data2 = sorted(data2.items(), key=lambda x: x[1][0], reverse=True)
             for i in range(len(ids_usuarios)):
                 #print(sort_data2)
                 data['username' + str(i)] = sort_data2[i][1][1]
@@ -950,7 +950,7 @@ class ProfileRecordView(APIView):
                 comentario = Comentarios.objects.filter(user_id=ids_usuarios[i]).count()
                 username = User.objects.get(id=ids_usuarios[i]).username
                 data2['comentarios' + str(i)] = [comentario, username]
-            sort_data2 = sorted(data2.items(), key=lambda x: x[0][1], reverse=True)
+            sort_data2 = sorted(data2.items(), key=lambda x: x[1][0], reverse=True)
             for i in range(len(ids_usuarios)):
                 data['username' + str(i)] = sort_data2[i][1][1]
                 data['comentarios' + str(i)] = sort_data2[i][1][0]
