@@ -896,14 +896,14 @@ class ProfileRecordView(APIView):
                 conteo_puntos = 0
                 for i in range(reto):
                     conteo_puntos += puntos[i].puntos
+                    data2['retos' + str(i)] = [reto, username]
                 count_usuario.append(conteo_puntos)
-                data2['retos' + str(i)] = [reto, username]
             sort_data2 = sorted(data2.items(), key=lambda x: x[1][1], reverse=True)
             for i in range(len(ids_usuarios)):
-                print(sort_data2)
+                #print(sort_data2)
                 data['username' + str(i)] = sort_data2[i][1][1]
                 #sort_data2[i][1][2] son puntos
-                print('sorted: ', sort_data2)
+                #print('sorted: ', sort_data2)
                 data['retos' + str(i)] = sort_data2[i][1][0]
 
                 data['puntos' + str(i)] = count_usuario[i]
