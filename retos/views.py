@@ -890,8 +890,8 @@ class ProfileRecordView(APIView):
                 data2['comentarios' + str(i)] = [comentario, username]
             sort_data2 = sorted(data2.items(), key=lambda x: x[1][1], reverse=True)
             for i in range(len(ids_usuarios)):
-                data['username' + str(i)] = sort_data2[1][1][1]
-                data['comentarios' + str(i)] = sort_data2[1][1][0]
+                data['username' + str(i)] = sort_data2[i][1][1]
+                data['comentarios' + str(i)] = sort_data2[i][1][0]
 
 
         elif ranks == 'retos':
