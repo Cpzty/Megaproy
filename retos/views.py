@@ -886,7 +886,7 @@ class ProfileRecordView(APIView):
             for user in retos:
                 if user.user_id not in ids_usuarios:
                     ids_usuarios.append(user.user_id)
-            print('ids: ', ids_usuarios)
+            #print('ids: ', ids_usuarios)
             data2 = {}
             count_usuario = []
             conteo_puntos = 0

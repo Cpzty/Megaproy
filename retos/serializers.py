@@ -116,6 +116,7 @@ class RetoSerializer(serializers.ModelSerializer):
         fields = (
             'name',
             'respuesta',
+            'puntos',
             'fecha_registrada',
         )
 
