@@ -1,10 +1,10 @@
-from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer, Cuestionario_NOSerializer, Cuestionario_NORSerializer, Cuestionario_ComunicacionSerializer, Cuestionario_ComunicacionRSerializer, Historial_emocionesSerializer, CuestionariosSerializer, PreguntasSerializer, InsigniasSerializer, Insignias_usuarioSerializer, RespuestasSerializer, ComentarioSerializer
+from .serializers import UserSerializer, ProfileSerializer, CuestionarioSerializer, RetoSerializer, Cuestionario_AESerializer, Cuestionario_AERSerializer, Cuestionario_PECSerializer, Cuestionario_PECRSerializer, Cuestionario_NOSerializer, Cuestionario_NORSerializer, Cuestionario_ComunicacionSerializer, Cuestionario_ComunicacionRSerializer, Historial_emocionesSerializer, CuestionariosSerializer, PreguntasSerializer, InsigniasSerializer, Insignias_usuarioSerializer, RespuestasSerializer, ComentarioSerializer, FrasesSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas, Insignias, Insignias_usuario, Comentarios
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas, Insignias, Insignias_usuario, Comentarios, Frases
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 #from django.template.loader import render_to_string
@@ -14,8 +14,8 @@ from django_rest_passwordreset.signals import reset_password_token_created
 from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
-from django.core import serializers
-import json
+
+import random
 
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
@@ -44,6 +44,37 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     )
     #msg.attach_alternative(email_html_message, "text/html")
     msg.send()
+
+class FrasesView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        serializer = FrasesSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create( validated_data=serializer.data)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED
+        )
+        return Response(
+            {
+                "error": True,
+                "error_msg": serializer.error_messages,
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    def get(self, request):
+        data = {}
+        reto = request.POST.get('reto', 'default')
+        if reto != 'default':
+            frases_count = Frases.objects.filter(reto=reto).count()
+            frase_seleccionada = random.randint(0, frases_count-1)
+            data['frase'] = Frases.objects.filter(reto=reto)[frase_seleccionada].frase
+        else:
+            data['reto'] = 'no se especifico reto'
+
+        return JsonResponse(data)
 
 class ComentariosView(APIView):
     permission_classes = [IsAuthenticated]
@@ -850,18 +881,21 @@ class ProfileRecordView(APIView):
             data['puntos'] = profile[0].puntos
 
         elif ranks == 'puntos':
-            profiles = Profile.objects.all().order_by('-puntos')
-            profile_ids = []
-            for user in profiles:
-                profile_ids.append(user.user_id)
-            usernames = []
-            for i in range(profiles.count()):
-                usernames.append(User.objects.get(id=profile_ids[i]).username)
+            #rework para obtener puntos a traves de retos realizados
+
+            pass
+         #   profiles = Profile.objects.all().order_by('-puntos')
+          #  profile_ids = []
+           # for user in profiles:
+            #    profile_ids.append(user.user_id)
+            #usernames = []
+            #for i in range(profiles.count()):
+             #   usernames.append(User.objects.get(id=profile_ids[i]).username)
 
             #data
-            for i in range(profiles.count()):
-                data['user' + str(i)] = usernames[i]
-                data['puntos' + str(i)] = profiles[i].puntos
+            #for i in range(profiles.count()):
+             #   data['user' + str(i)] = usernames[i]
+              #  data['puntos' + str(i)] = profiles[i].puntos
                 #data['id' + str(i)] = profile_ids[i]
 
         elif ranks == 'insignias':

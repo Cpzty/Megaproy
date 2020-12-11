@@ -1,7 +1,19 @@
 from django.contrib.auth.models import User
-from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas, Insignias, Insignias_usuario, Comentarios
+from .models import Profile, Cuestionario, Reto_finalizado, Cuestionario_autoestima, Cuestionario_autoestima_respondido, Cuestionario_PEC, Cuestionario_PEC_Realizado, Cuestionario_no, Cuestionario_no_realizado, Cuestionario_comunicacion_efectiva, Cuestionario_comunicacion_realizado, Historial_emociones, Cuestionarios, Preguntas, Respuestas, Insignias, Insignias_usuario, Comentarios, Frases
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
+
+class FrasesSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        frase = Frases.objects.create(**validated_data)
+        return frase
+
+    class Meta:
+        model = Frases
+        fields = (
+            'reto',
+            'frase'
+        )
 
 class ComentarioSerializer(serializers.ModelSerializer):
     def create(self, validated_data, user):
@@ -356,7 +368,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = (
             'racha',
-            'puntos'
         )
 
 
