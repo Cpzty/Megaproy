@@ -886,7 +886,7 @@ class ProfileRecordView(APIView):
             for user in retos:
                 if user.user_id not in ids_usuarios:
                     ids_usuarios.append(user.user_id)
-
+            print('ids: ', ids_usuarios)
             data2 = {}
             count_usuario = []
             for i in range(len(ids_usuarios)):
@@ -900,8 +900,10 @@ class ProfileRecordView(APIView):
                 data2['retos' + str(i)] = [reto, username]
             sort_data2 = sorted(data2.items(), key=lambda x: x[1][1], reverse=True)
             for i in range(len(ids_usuarios)):
+                print(sort_data2)
                 data['username' + str(i)] = sort_data2[i][1][1]
                 #sort_data2[i][1][2] son puntos
+                print('sorted: ', sort_data2)
                 data['retos' + str(i)] = sort_data2[i][1][0]
 
                 data['puntos' + str(i)] = count_usuario[i]
