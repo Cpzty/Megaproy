@@ -891,11 +891,13 @@ class ProfileRecordView(APIView):
             for i in range(len(ids_usuarios)):
                 reto = Reto_finalizado.objects.filter(user_id=ids_usuarios[i]).count()
                 username = User.objects.get(id=ids_usuarios[i]).username
-                data2['retos' + str(i)] = [reto, username]
+                puntos = Reto_finalizado.objects.get(user_id=ids_usuarios[i]).puntos
+                data2['retos' + str(i)] = [reto, username, puntos]
             sort_data2 = sorted(data2.items(), key=lambda x: x[1][1], reverse=True)
             for i in range(len(ids_usuarios)):
                 data['username' + str(i)] = sort_data2[i][1][1]
-                data['retos' + str(i)] = sort_data2[i][1][0] * 10
+                #sort_data2[i][1][2] son puntos
+                data['puntos retos' + str(i)] = sort_data2[i][1][0] * sort_data2[i][1][2]
 
             #rework para obtener puntos a traves de retos realizados
 
