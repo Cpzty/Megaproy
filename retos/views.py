@@ -876,6 +876,19 @@ class ProfileRecordView(APIView):
                 data['username' + str(i)] = username
                 data['insignias' + str(i)] = cantidad_insignias
 
+        elif ranks == 'comentarios':
+            ids_usuarios = []
+            comentarios = Comentarios.objects.all()
+            for user in comentarios:
+                if user.user_id not in ids_usuarios:
+                    ids_usuarios.append(user.user_id)
+            for i in range(len(ids_usuarios)):
+                comentario = Comentarios.objects.filter(user_id=ids_usuarios[i]).count()
+                username = User.objects.get(id=ids_usuarios[i]).username
+                data['username' + str(i)] = username
+                data['comentarios' + str(i)] = comentario
+
+
         elif ranks == 'retos':
             ids_usuarios = []
             usuarios_retos = Reto_finalizado.objects.all()
