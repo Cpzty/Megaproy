@@ -882,11 +882,16 @@ class ProfileRecordView(APIView):
             for user in comentarios:
                 if user.user_id not in ids_usuarios:
                     ids_usuarios.append(user.user_id)
+
+            data2 = {}
             for i in range(len(ids_usuarios)):
                 comentario = Comentarios.objects.filter(user_id=ids_usuarios[i]).count()
                 username = User.objects.get(id=ids_usuarios[i]).username
-                data['username' + str(i)] = username
-                data['comentarios' + str(i)] = comentario
+                data2['comentarios' + str(i)] = [comentario, username]
+            sort_data2 = sorted(data2.items(), key=lambda x: x[1][1], reverse=True)
+            for i in range(len(ids_usuarios)):
+                data['username' + str(i)] = sort_data2[1][1][1]
+                data['username' + str(i)] = sort_data2[1][1][0]
 
 
         elif ranks == 'retos':
