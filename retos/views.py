@@ -878,9 +878,25 @@ class ProfileRecordView(APIView):
         ranks = request.POST.get('ranking', 'default')
         if ranks == 'default':
             data['racha'] = profile[0].racha
-            data['puntos'] = profile[0].puntos
+            data['puntos'] =  Reto_finalizado.objects.filter(user=request.user).count() * 10
 
         elif ranks == 'puntos':
+            ids_usuarios = []
+            retos = Reto_finalizado.objects.all()
+            for user in retos:
+                if user.user_id not in ids_usuarios:
+                    ids_usuarios.append(user.user_id)
+
+            data2 = {}
+            for i in range(len(ids_usuarios)):
+                reto = Reto_finalizado.objects.filter(user_id=ids_usuarios[i]).count()
+                username = User.objects.get(id=ids_usuarios[i]).username
+                data2['retos' + str(i)] = [reto, username]
+            sort_data2 = sorted(data2.items(), key=lambda x: x[1][1], reverse=True)
+            for i in range(len(ids_usuarios)):
+                data['username' + str(i)] = sort_data2[i][1][1]
+                data['retos' + str(i)] = sort_data2[i][1][0] * 10
+
             #rework para obtener puntos a traves de retos realizados
 
             pass
