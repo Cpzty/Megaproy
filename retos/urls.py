@@ -22,6 +22,6 @@ urlpatterns = [
     path('respuestas/', RespuestasView.as_view(), name='respuestas'),
     path('insignias_usuario/', Insignias_usuarioView.as_view(), name='insignias_usuario'),
     path('comentarios/', ComentariosView.as_view(), name='comentarios'),
-    path('comentarios/', FrasesView.as_view(), name='frases'),
+    path('frases/', FrasesView.as_view(), name='frases'),
 
 ]
