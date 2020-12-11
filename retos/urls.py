@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserRecordView, ProfileRecordView, CuestionarioAEView, CuestionarioAERView, CuestionarioPECView, CuestionarioPECRView, CuestionarioNOView, CuestionarioNORView, CuestionarioComunicacionView,CuestionarioComunicacionRView, HistorialEmocionesView, RetoRecordView, CuestionariosView, PreguntasView, InsigniasView, RespuestasView, Insignias_usuarioView, ComentariosView
+from .views import UserRecordView, ProfileRecordView, CuestionarioAEView, CuestionarioAERView, CuestionarioPECView, CuestionarioPECRView, CuestionarioNOView, CuestionarioNORView, CuestionarioComunicacionView,CuestionarioComunicacionRView, HistorialEmocionesView, RetoRecordView, CuestionariosView, PreguntasView, InsigniasView, RespuestasView, Insignias_usuarioView, ComentariosView, FrasesView
 
 app_name = 'retos'
 urlpatterns = [
@@ -22,5 +22,6 @@ urlpatterns = [
     path('respuestas/', RespuestasView.as_view(), name='respuestas'),
     path('insignias_usuario/', Insignias_usuarioView.as_view(), name='insignias_usuario'),
     path('comentarios/', ComentariosView.as_view(), name='comentarios'),
+    path('comentarios/', FrasesView.as_view(), name='frases'),
 
 ]
