@@ -968,7 +968,8 @@ class ProfileRecordView(APIView):
                 cantidad_retos = Reto_finalizado.objects.filter(user_id=ids_usuarios[i]).count()
                 username = User.objects.get(id=ids_usuarios[i]).username
                 data['username' + str(i)] = [cantidad_retos, username]
-                sort_data2 = sorted(data2.items(), key=lambda x: x[1][0], reverse=True)
+            sort_data2 = sorted(data2.items(), key=lambda x: x[1][0], reverse=True)
+            for i in range(len(ids_usuarios)):
                 data['username' + str(i)] = sort_data2[i][1][1]
                 data['retos' + str(i)] = sort_data2[i][1][0]
                 #data['retos' + str(i)] = cantidad_retos
