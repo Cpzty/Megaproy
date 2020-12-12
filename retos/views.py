@@ -239,7 +239,7 @@ class RespuestasView(APIView):
 
     def post(self, request):
         identifier = request.POST.get('pregunta', 'default')
-        preguntas = Preguntas.objects.get(pregunta=identifier)
+        preguntas = Preguntas.objects.filter(pregunta=identifier)
         #data = serializers.serialize('json', respuesta.values())
         serializer = RespuestasSerializer(data=request.data)
         if serializer.is_valid(raise_exception=ValueError):
