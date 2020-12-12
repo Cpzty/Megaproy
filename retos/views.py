@@ -963,11 +963,15 @@ class ProfileRecordView(APIView):
             for user in usuarios_retos:
                 if user.user_id not in ids_usuarios:
                     ids_usuarios.append(user.user_id)
+            data2 = {}
             for i in range(len(ids_usuarios)):
                 cantidad_retos = Reto_finalizado.objects.filter(user_id=ids_usuarios[i]).count()
                 username = User.objects.get(id=ids_usuarios[i]).username
-                data['username' + str(i)] = username
-                data['retos' + str(i)] = cantidad_retos
+                data['username' + str(i)] = [cantidad_retos, username]
+                sort_data2 = sorted(data2.items(), key=lambda x: x[1][0], reverse=True)
+                data['username' + str(i)] = sort_data2[i][1][1]
+                data['retos' + str(i)] = sort_data2[i][1][0]
+                #data['retos' + str(i)] = cantidad_retos
 
         elif ranks == 'racha':
             profiles = Profile.objects.all().order_by('-racha')
