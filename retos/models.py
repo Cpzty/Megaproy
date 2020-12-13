@@ -309,7 +309,10 @@ def save_aer(sender, instance, **kwargs):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     racha = models.IntegerField(default=0)
-
+    autoestima_finalizado = models.BooleanField(default=False)
+    pec_finalizado = models.BooleanField(default=False)
+    comodecirqueno_finalizado = models.BooleanField(default=False)
+    comunicacion_finalizado = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.user)

@@ -1004,6 +1004,18 @@ class ProfileRecordView(APIView):
             if 'puntos' in request.POST:
                 objec.puntos = int(objec.puntos) + int(request.POST.get('puntos', ''))
 
+            if 'autoestima_finalizado' in request.POST:
+                objec.autoestima_finalizado = True
+
+            if 'pec_finalizado' in request.POST:
+                objec.pec_finalizado = True
+
+            if 'comodecirqueno_finalizado' in request.POST:
+                objec.comodecirqueno_finalizado = True
+
+            if 'comunicacion_finalizado' in request.POST:
+                objec.comunicacion_finalizado = True
+
             objec.save()
         serializer = ProfileSerializer(users, many=True)
         return Response(serializer.data)
