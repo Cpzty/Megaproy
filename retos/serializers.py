@@ -369,6 +369,10 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = (
             'racha',
+            'autoestima_finalizado',
+            'pec_finalizado',
+            'comodecirqueno_finalizado',
+            'comunicacion_finalizado',
         )
 
 
